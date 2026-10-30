@@ -1,0 +1,919 @@
+.home {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: relative;
+}
+
+.home__top {
+  position: relative;
+  z-index: 6;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.25rem;
+  gap: 1.15rem;
+  margin-top: 3.5rem;
+}
+
+.home__lockup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.home__ys-logo {
+  width: 5.6rem;
+  height: auto;
+}
+
+.home__x {
+  width: 0.85rem;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.home__pepsi-word {
+  width: 4.4rem;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.home__headline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  font-weight: 800;
+  font-size: clamp(1.55rem, 7.2vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0, 0, 40, 0.35);
+}
+
+.home__headline span {
+  white-space: nowrap;
+}
+
+.home__support {
+  display: none;
+}
+
+.home__cta {
+  margin-top: 0.15rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.home__stage {
+  position: relative;
+  flex: 1;
+  min-height: 24rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.home__artists {
+  position: relative;
+  z-index: 5;
+  width: min(108%, 28rem);
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  pointer-events: none;
+  margin-bottom: -0.5rem;
+}
+
+.home__prop {
+  position: absolute;
+  pointer-events: none;
+  /* Knock out solid black asset backgrounds against navy */
+  mix-blend-mode: screen;
+}
+
+/* Vinyl — behind speakers & YS */
+.home__prop--vinyl {
+  z-index: 1;
+  width: 78%;
+  max-width: 21rem;
+  top: auto;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.95;
+}
+
+/* Speakers — above vinyl, behind YS shoulders */
+.home__prop--speaker-l {
+  z-index: 2;
+  width: 5.8rem;
+  top: auto;
+  bottom: 48%;
+  left: -1%;
+  animation: float-y 3.8s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+.home__prop--speaker-r {
+  z-index: 2;
+  width: 5.8rem;
+  top: auto;
+  bottom: 48%;
+  right: -1%;
+  animation: float-y 3.8s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
+/* Headphones rest on the visible top of the vinyl */
+.home__prop--headphones {
+  z-index: 3;
+  width: 4.6rem;
+  top: auto;
+  bottom: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: float-y 3.4s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+.home__prop--music {
+  z-index: 6;
+  width: 3.5rem;
+  left: 3%;
+  bottom: 5%;
+  animation: float-y 3.6s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.home__prop--play {
+  z-index: 6;
+  width: 3.6rem;
+  right: 3%;
+  bottom: 5%;
+  animation: float-y 3.6s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+@media (min-width: 390px) {
+  .home__prop--speaker-l,
+  .home__prop--speaker-r {
+    width: 6.4rem;
+  }
+
+  .home__prop--vinyl {
+    width: 80%;
+    max-width: 22rem;
+  }
+}
+
+/* iPhone SE (375×667) and similarly short phones */
+@media (max-width: 390px) and (max-height: 700px) {
+  .home__top {
+    margin-top: 2.85rem;
+    gap: 0.8rem;
+    padding: 0 1rem 0.5rem;
+  }
+
+  .home__ys-logo {
+    width: 4.6rem;
+  }
+
+  .home__x {
+    width: 0.72rem;
+  }
+
+  .home__pepsi-word {
+    width: 3.55rem;
+  }
+
+  .home__headline {
+    font-size: 1.38rem;
+    gap: 0.08rem;
+  }
+
+  .home__cta {
+    margin-top: 0;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 11.5rem;
+    max-width: 13rem;
+    min-height: 2.7rem;
+    font-size: 0.8rem;
+    padding: 0.5rem 0.45rem 0.5rem 1rem;
+  }
+
+  .home__cta .cta-btn__icon {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .home__stage {
+    min-height: 0;
+    margin-top: 0.15rem;
+    flex: 1 1 0;
+  }
+
+  .home__artists {
+    width: min(102%, 20rem);
+    margin-bottom: -1.25rem;
+  }
+
+  .home__prop--vinyl {
+    width: 68%;
+    max-width: 16rem;
+    bottom: 18%;
+  }
+
+  .home__prop--speaker-l {
+    width: 4.7rem;
+    bottom: 40%;
+    left: 7%;
+  }
+
+  .home__prop--speaker-r {
+    width: 4.7rem;
+    bottom: 40%;
+    right: 7%;
+  }
+
+  .home__prop--headphones {
+    width: 3.5rem;
+    bottom: 36%;
+  }
+
+  .home__prop--music,
+  .home__prop--play {
+    width: 2.85rem;
+    bottom: 3%;
+  }
+}
+
+/* ========== TABLET (iPad Mini 768×1024) ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .home__top {
+    margin-top: 2.25rem;
+    gap: 1.15rem;
+    padding: 0 2.25rem;
+    max-width: 34rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home__ys-logo {
+    width: 6.25rem;
+  }
+
+  .home__x {
+    width: 0.95rem;
+  }
+
+  .home__pepsi-word {
+    width: 4.9rem;
+  }
+
+  .home__headline {
+    font-size: clamp(1.75rem, 4vw, 2.2rem);
+    gap: 0.15rem;
+  }
+
+  .home__support {
+    display: block;
+    max-width: 26rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    opacity: 0.95;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 13rem;
+    max-width: 15rem;
+    min-height: 3.05rem;
+    font-size: 0.9rem;
+  }
+
+  .home__stage {
+    min-height: 0;
+    flex: 1 1 auto;
+    margin-top: 0.35rem;
+  }
+
+  .home__artists {
+    width: min(88%, 30rem);
+    margin-bottom: -0.25rem;
+  }
+
+  .home__prop--vinyl {
+    width: 70%;
+    max-width: 22rem;
+    bottom: 18%;
+  }
+
+  .home__prop--speaker-l,
+  .home__prop--speaker-r {
+    width: 6.75rem;
+    bottom: 50%;
+    z-index: 2;
+  }
+
+  .home__prop--speaker-l {
+    left: 20%;
+  }
+
+  .home__prop--speaker-r {
+    right: 20%;
+  }
+
+  .home__prop--headphones {
+    width: 5rem;
+    bottom: 36%;
+  }
+
+  .home__prop--music,
+  .home__prop--play {
+    width: 4rem;
+    bottom: 3.5%;
+  }
+
+  .home__prop--music {
+    left: 5%;
+  }
+
+  .home__prop--play {
+    right: 5%;
+  }
+}
+
+/* ========== DESKTOP ========== */
+@media (min-width: 1024px) {
+  .home {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 0 4rem 0 4.5rem;
+    gap: 1rem;
+    min-height: 0;
+  }
+
+  .home__top {
+    flex: 0 1 42%;
+    align-items: flex-start;
+    align-self: center;
+    text-align: left;
+    margin-top: 0;
+    padding: 0;
+    gap: 1.4rem;
+    max-width: 34rem;
+  }
+
+  .home__lockup {
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .home__ys-logo {
+    width: 7.5rem;
+  }
+
+  .home__x {
+    width: 1.1rem;
+  }
+
+  .home__pepsi-word {
+    width: 5.8rem;
+  }
+
+  .home__headline {
+    font-size: clamp(2.4rem, 3.6vw, 3.35rem);
+    gap: 0.2rem;
+    text-align: left;
+  }
+
+  .home__support {
+    display: block;
+    max-width: 26rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    opacity: 0.95;
+  }
+
+  .home__cta {
+    justify-content: flex-start;
+    margin-top: 0.35rem;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 14rem;
+    max-width: 16rem;
+    min-height: 3.35rem;
+    font-size: 0.95rem;
+  }
+
+  .home__stage {
+    flex: 1 1 55%;
+    min-height: 0;
+    height: 100%;
+    margin-top: 0;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+    align-self: stretch;
+  }
+
+  .home__artists {
+    width: min(100%, 36rem);
+    margin-bottom: 0;
+    z-index: 5;
+    align-self: flex-end;
+  }
+
+  /* Vinyl behind speakers */
+  .home__prop--vinyl {
+    width: 72%;
+    max-width: 28rem;
+    top: auto;
+    bottom: 18%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  /* Speakers above vinyl, hidden under YS shoulders */
+  .home__prop--speaker-l {
+    width: 9rem;
+    top: auto;
+    bottom: 42%;
+    left: 24%;
+    z-index: 2;
+  }
+
+  .home__prop--speaker-r {
+    width: 9rem;
+    top: auto;
+    bottom: 42%;
+    right: 24%;
+    z-index: 2;
+  }
+
+  /* Headset above vinyl — upper area of stage */
+  .home__prop--headphones {
+    width: 6.75rem;
+    top: 8%;
+    bottom: auto;
+    left: 58%;
+    transform: none;
+    z-index: 4;
+  }
+
+  .home__prop--music {
+    width: 5.75rem;
+    left: 5%;
+    bottom: 6%;
+    z-index: 6;
+  }
+
+  .home__prop--play {
+    width: 5.75rem;
+    right: 5%;
+    bottom: 6%;
+    z-index: 6;
+  }
+}
+
+/* Laptop screens (narrower / shorter than large monitors) */
+@media (min-width: 1024px) and (max-width: 1440px),
+  (min-width: 1024px) and (max-height: 900px) {
+  .home {
+    align-items: stretch;
+    padding: 0 2rem 0 2.25rem;
+    gap: 0.75rem;
+  }
+
+  .home__top {
+    flex: 0 1 40%;
+    align-self: center;
+    gap: 0.85rem;
+    max-width: 28rem;
+  }
+
+  .home__ys-logo {
+    width: 5.75rem;
+  }
+
+  .home__x {
+    width: 0.9rem;
+  }
+
+  .home__pepsi-word {
+    width: 4.5rem;
+  }
+
+  .home__headline {
+    font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+    gap: 0.1rem;
+  }
+
+  .home__support {
+    max-width: 22rem;
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 12.5rem;
+    max-width: 14.5rem;
+    min-height: 2.9rem;
+    font-size: 0.85rem;
+  }
+
+  .home__stage {
+    flex: 1 1 58%;
+    align-items: flex-end;
+    align-self: stretch;
+    overflow: visible;
+  }
+
+  .home__artists {
+    width: auto;
+    max-width: min(100%, 28rem);
+    max-height: none;
+    height: auto;
+    margin-bottom: 0;
+    object-fit: contain;
+    object-position: bottom center;
+    align-self: flex-end;
+    z-index: 5;
+  }
+
+  .home__prop--vinyl {
+    width: 58%;
+    max-width: 20rem;
+    bottom: 22%;
+    z-index: 1;
+  }
+
+  /* Laptop speakers — previous placement (monitor unchanged) */
+  .home__prop--speaker-l {
+    width: 6.75rem;
+    bottom: 48%;
+    left: 16%;
+    z-index: 2;
+  }
+
+  .home__prop--speaker-r {
+    width: 6.75rem;
+    bottom: 48%;
+    right: 16%;
+    z-index: 2;
+  }
+
+  /* Same upper-right headset placement as monitor intent */
+  .home__prop--headphones {
+    width: 5.15rem;
+    top: 3%;
+    bottom: auto;
+    left: auto;
+    right: 12%;
+    transform: none;
+    z-index: 4;
+  }
+
+  .home__prop--music {
+    width: 4.35rem;
+    left: 4%;
+    bottom: 4%;
+    z-index: 6;
+  }
+
+  .home__prop--play {
+    width: 4.35rem;
+    right: 4%;
+    bottom: 4%;
+    z-index: 6;
+  }
+}
+
+/* ========== iPad Pro 13 (1032×1376) + Surface Pro 10 (960×1440) portrait ========== */
+@media (min-width: 940px) and (max-width: 1100px) and (min-height: 1300px) and (orientation: portrait) {
+  .home {
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+  }
+
+  .home__top {
+    flex: 0 0 auto;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    margin-top: 2.75rem;
+    gap: 1.35rem;
+    padding: 0 2.5rem;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home__lockup {
+    justify-content: center;
+  }
+
+  .home__ys-logo {
+    width: 6.75rem;
+  }
+
+  .home__x {
+    width: 1rem;
+  }
+
+  .home__pepsi-word {
+    width: 5.25rem;
+  }
+
+  .home__headline {
+    font-size: clamp(1.9rem, 4.2vw, 2.45rem);
+    gap: 0.18rem;
+    text-align: center;
+  }
+
+  .home__support {
+    display: block;
+    max-width: 28rem;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    opacity: 0.95;
+    text-align: center;
+  }
+
+  .home__cta {
+    justify-content: center;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 13.5rem;
+    max-width: 15.5rem;
+    min-height: 3.15rem;
+    font-size: 0.92rem;
+  }
+
+  .home__stage {
+    flex: 1 1 auto;
+    min-height: 28rem;
+    height: auto;
+    margin-top: 0.5rem;
+    overflow: hidden;
+    align-self: stretch;
+  }
+
+  .home__artists {
+    width: min(90%, 36rem);
+    margin-bottom: -0.35rem;
+  }
+
+  .home__prop--vinyl {
+    width: 72%;
+    max-width: 26rem;
+    bottom: 20%;
+    left: 50%;
+    top: auto;
+    transform: translateX(-50%);
+  }
+
+  .home__prop--speaker-l,
+  .home__prop--speaker-r {
+    width: 7.75rem;
+    bottom: 45%;
+    z-index: 2;
+  }
+
+  .home__prop--speaker-l {
+    left: 22%;
+  }
+
+  .home__prop--speaker-r {
+    right: 22%;
+  }
+
+  .home__prop--headphones {
+    width: 5.5rem;
+    bottom: 38%;
+    left: 50%;
+    top: auto;
+    right: auto;
+    transform: translateX(-50%);
+    z-index: 3;
+  }
+
+  .home__prop--music,
+  .home__prop--play {
+    width: 4.5rem;
+    bottom: 4%;
+  }
+
+  .home__prop--music {
+    left: 6%;
+  }
+
+  .home__prop--play {
+    right: 6%;
+  }
+}
+
+/* ========== iPad Pro 13 only (1032×1376) ========== */
+@media (min-width: 1000px) and (max-width: 1080px) and (min-height: 1340px) and (orientation: portrait) {
+  .home {
+    min-height: 100%;
+  }
+
+  .home__top {
+    margin-top: 4.5rem;
+    gap: 1.5rem;
+    padding: 0 2.75rem 0.5rem;
+  }
+
+  .home__headline {
+    font-size: clamp(2.05rem, 4vw, 2.6rem);
+  }
+
+  .home__support {
+    font-size: 1.05rem;
+    max-width: 30rem;
+  }
+
+  .home__cta {
+    margin-top: 0.35rem;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 14.5rem;
+    max-width: 16.5rem;
+    min-height: 3.35rem;
+    font-size: 0.95rem;
+  }
+
+  .home__stage {
+    flex: 1 1 0;
+    min-height: 0;
+    margin-top: 0.75rem;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .home__artists {
+    width: min(98%, 44rem);
+    max-width: 44rem;
+    margin-bottom: 0;
+    align-self: flex-end;
+    object-position: bottom center;
+  }
+
+  .home__prop--vinyl {
+    width: 78%;
+    max-width: 30rem;
+    bottom: 30%;
+  }
+
+  .home__prop--speaker-l,
+  .home__prop--speaker-r {
+    width: 12rem;
+    bottom: 48%;
+  }
+
+  .home__prop--speaker-l {
+    left: 12%;
+  }
+
+  .home__prop--speaker-r {
+    right: 13%;
+  }
+
+  .home__prop--headphones {
+    width: 6rem;
+    bottom: 34%;
+  }
+
+  .home__prop--music,
+  .home__prop--play {
+    width: 5rem;
+    bottom: 3%;
+  }
+}
+
+/* ========== Surface Pro 10 only (960×1440) ========== */
+@media (min-width: 940px) and (max-width: 990px) and (min-height: 1400px) and (orientation: portrait) {
+  .home {
+    min-height: 100%;
+  }
+
+  .home__top {
+    margin-top: 4.75rem;
+    gap: 1.45rem;
+    padding: 0 2.5rem 0.5rem;
+  }
+
+  .home__headline {
+    font-size: clamp(1.95rem, 4.2vw, 2.5rem);
+  }
+
+  .home__support {
+    font-size: 1.02rem;
+    max-width: 29rem;
+  }
+
+  .home__cta {
+    margin-top: 0.4rem;
+  }
+
+  .home__cta .cta-btn {
+    min-width: 14.25rem;
+    max-width: 16.25rem;
+    min-height: 3.3rem;
+    font-size: 0.94rem;
+  }
+
+  .home__stage {
+    flex: 1 1 0;
+    min-height: 0;
+    margin-top: 0.85rem;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .home__artists {
+    width: min(96%, 40rem);
+    max-width: 40rem;
+    margin-bottom: 0;
+    align-self: flex-end;
+    object-position: bottom center;
+  }
+
+  .home__prop--vinyl {
+    width: 74%;
+    max-width: 28rem;
+    bottom: 25%;
+    left: 50%;
+    top: auto;
+    transform: translateX(-50%);
+  }
+
+  .home__prop--speaker-l,
+  .home__prop--speaker-r {
+    width: 9rem;
+    bottom: 42%;
+    z-index: 2;
+  }
+
+  .home__prop--speaker-l {
+    left: 14%;
+  }
+
+  .home__prop--speaker-r {
+    right: 14%;
+  }
+
+  .home__prop--headphones {
+    width: 5.75rem;
+    bottom: 36%;
+    left: 50%;
+    top: auto;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  .home__prop--music,
+  .home__prop--play {
+    width: 4.75rem;
+    bottom: 3%;
+  }
+}

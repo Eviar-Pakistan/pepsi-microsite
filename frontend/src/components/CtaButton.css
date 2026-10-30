@@ -1,0 +1,57 @@
+.cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: auto;
+  min-width: 12.5rem;
+  max-width: 14.5rem;
+  min-height: 3rem;
+  padding: 0.65rem 0.55rem 0.65rem 1.15rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--white);
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #1a4dff 0%, #0a1f8a 55%, #02061a 100%);
+  box-shadow:
+    0 0 0 2px rgba(0, 40, 160, 0.55),
+    0 8px 24px rgba(0, 20, 80, 0.55);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.cta-btn:active:not(:disabled) {
+  transform: scale(0.98);
+  filter: brightness(0.95);
+}
+
+.cta-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cta-btn__label {
+  flex: 1;
+  text-align: center;
+  padding-right: 0.15rem;
+}
+
+.cta-btn__icon {
+  flex-shrink: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--white);
+  display: grid;
+  place-items: center;
+}
+
+.cta-btn__icon svg {
+  display: block;
+}

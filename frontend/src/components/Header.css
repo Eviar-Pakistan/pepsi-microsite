@@ -1,0 +1,171 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.15rem 0.5rem;
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.header__logo-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.header__logo {
+  width: 3.15rem;
+  height: 3.15rem;
+  object-fit: contain;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.header__link {
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.15rem 0;
+  opacity: 0.92;
+  white-space: nowrap;
+}
+
+.header__link.is-active {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  opacity: 1;
+}
+
+@media (min-width: 380px) {
+  .header__link {
+    font-size: 0.7rem;
+  }
+
+  .header__nav {
+    gap: 1rem;
+  }
+}
+
+/* iPhone SE */
+@media (max-width: 390px) and (max-height: 700px) {
+  .header {
+    padding: 0.75rem 0.9rem 0.25rem;
+  }
+
+  .header__logo {
+    width: 2.55rem;
+    height: 2.55rem;
+  }
+
+  .header__link {
+    font-size: 0.58rem;
+  }
+
+  .header__nav {
+    gap: 0.65rem;
+  }
+}
+
+/* ========== TABLET (iPad Mini) ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .header {
+    justify-content: flex-start;
+    gap: 1.75rem;
+    padding: 1.35rem 2rem 0.85rem;
+  }
+
+  .header__logo {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .header__nav {
+    gap: 1.5rem;
+  }
+
+  .header__link {
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* ========== DESKTOP ========== */
+@media (min-width: 1024px) {
+  .header {
+    justify-content: flex-start;
+    gap: 2.75rem;
+    padding: 1.6rem 3.5rem 1rem;
+  }
+
+  .header__logo {
+    width: 3.6rem;
+    height: 3.6rem;
+  }
+
+  .header__nav {
+    gap: 2rem;
+  }
+
+  .header__link {
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1440px),
+  (min-width: 1024px) and (max-height: 900px) {
+  .header {
+    gap: 1.75rem;
+    padding: 1rem 2rem 0.5rem;
+  }
+
+  .header__logo {
+    width: 2.85rem;
+    height: 2.85rem;
+  }
+
+  .header__nav {
+    gap: 1.35rem;
+  }
+
+  .header__link {
+    font-size: 0.78rem;
+  }
+}
+
+/* ========== iPad Pro 13 + Surface Pro 10 portrait ========== */
+@media (min-width: 940px) and (max-width: 1100px) and (min-height: 1300px) and (orientation: portrait) {
+  .header {
+    justify-content: flex-start;
+    gap: 2.5rem;
+    padding: 1.85rem 3.25rem 1.15rem;
+  }
+
+  .header__logo {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+
+  .header__nav {
+    gap: 1.85rem;
+  }
+
+  .header__link {
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+  }
+}
