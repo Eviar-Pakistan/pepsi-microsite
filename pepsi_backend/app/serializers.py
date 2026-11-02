@@ -1,4 +1,8 @@
+import re
+
 from rest_framework import serializers
+
+NAME_CITY_RE = re.compile(r"^[A-Za-z][A-Za-z\s'.-]{0,99}$")
 
 
 class CreateVideoSerializer(serializers.Serializer):
@@ -17,16 +21,22 @@ class CreateVideoSerializer(serializers.Serializer):
         return super().to_internal_value(data)
 
     def validate_name(self, value):
-        if any(ord(c) < 32 for c in value):
-            raise serializers.ValidationError("Invalid name.")
+        value = value.strip()
+        if any(ch.isdigit() for ch in value):
+            raise serializers.ValidationError("Name cannot contain numbers.")
+        if any(ord(c) < 32 for c in value) or not NAME_CITY_RE.fullmatch(value):
+            raise serializers.ValidationError("Enter a valid name.")
         return value
 
     def validate_email(self, value):
         return value.strip().lower()
 
     def validate_city(self, value):
-        if any(ord(c) < 32 for c in value):
-            raise serializers.ValidationError("Invalid city.")
+        value = value.strip()
+        if any(ch.isdigit() for ch in value):
+            raise serializers.ValidationError("City cannot contain numbers.")
+        if any(ord(c) < 32 for c in value) or not NAME_CITY_RE.fullmatch(value):
+            raise serializers.ValidationError("Enter a valid city.")
         return value
 
     def validate_privacyConsent(self, value):

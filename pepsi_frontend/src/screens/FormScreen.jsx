@@ -30,16 +30,26 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
-    setValues((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }))
+    if (type === 'checkbox') {
+      setValues((prev) => ({ ...prev, [name]: checked }))
+      return
+    }
+    const next = name === 'name' || name === 'city' ? value.replace(/\d/g, '') : value
+    setValues((prev) => ({ ...prev, [name]: next }))
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (isSubmitting) return
 
+    if (/\d/.test(values.name)) {
+      setError('Name cannot contain numbers.')
+      return
+    }
+    if (/\d/.test(values.city)) {
+      setError('City cannot contain numbers.')
+      return
+    }
     if (!values.privacyConsent) {
       setError('Please accept the Privacy Notice and Terms & Conditions.')
       return

@@ -59,6 +59,25 @@
   display: none;
 }
 
+.phone-shell__content--scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
+}
+
+.phone-shell__content--scrollable::-webkit-scrollbar {
+  display: block;
+  width: 6px;
+}
+
+.phone-shell__content--scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.phone-shell__content--scrollable::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+}
+
 .app-flow-error {
   margin: 0.75rem 1.25rem 0;
   padding: 0.65rem 0.85rem;

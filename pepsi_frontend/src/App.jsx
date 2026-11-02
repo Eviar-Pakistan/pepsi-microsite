@@ -55,7 +55,9 @@ export default function App() {
     <div className="app-root">
       <div className="phone-shell">
         <Header activeScreen={screen} onNavigate={handleNavigate} />
-        <main className="phone-shell__content">
+        <main
+          className={`phone-shell__content${screen === 'tcs' ? ' phone-shell__content--scrollable' : ''}`}
+        >
           {screen === 'home' && <Home onGetVideo={handleGetVideo} />}
           {screen === 'form' && (
             <>
