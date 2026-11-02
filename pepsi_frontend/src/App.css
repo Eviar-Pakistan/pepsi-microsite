@@ -140,6 +140,28 @@
   .phone-shell__content {
     overflow: hidden;
   }
+
+  /* T&Cs (and any --scrollable screen) must scroll on laptop/desktop */
+  .phone-shell__content--scrollable {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.45) transparent;
+  }
+
+  .phone-shell__content--scrollable::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+
+  .phone-shell__content--scrollable::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .phone-shell__content--scrollable::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+  }
 }
 
 /* Laptop / shorter desktop viewports */
@@ -175,6 +197,11 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+  }
+
+  .phone-shell__content--scrollable {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 
   .app-flow-error {
