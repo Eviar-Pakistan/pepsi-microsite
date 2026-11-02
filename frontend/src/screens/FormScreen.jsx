@@ -96,7 +96,7 @@ export default function FormScreen({ onSubmit }) {
               />
             </label>
 
-            <label className="form-field form-field--desktop-only">
+            {/* <label className="form-field form-field--desktop-only">
               <span className="form-field__label">PHONE NUMBER:</span>
               <input
                 className="form-field__input"
@@ -107,9 +107,9 @@ export default function FormScreen({ onSubmit }) {
                 autoComplete="tel"
                 disabled={isSubmitting}
               />
-            </label>
+            </label> */}
 
-            <label className="form-field form-field--desktop-only">
+            {/* <label className="form-field form-field--desktop-only">
               <span className="form-field__label">ADDRESS:</span>
               <input
                 className="form-field__input"
@@ -120,9 +120,9 @@ export default function FormScreen({ onSubmit }) {
                 autoComplete="street-address"
                 disabled={isSubmitting}
               />
-            </label>
+            </label> */}
 
-            <label className="form-field form-field--desktop-only">
+            {/* <label className="form-field form-field--desktop-only">
               <span className="form-field__label">ENTER PACK CODE:</span>
               <input
                 className="form-field__input"
@@ -132,7 +132,7 @@ export default function FormScreen({ onSubmit }) {
                 onChange={handleChange}
                 disabled={isSubmitting}
               />
-            </label>
+            </label> */}
 
             <label className="form-field">
               <span className="form-field__label">CITY:</span>
@@ -149,7 +149,7 @@ export default function FormScreen({ onSubmit }) {
             </label>
           </div>
 
-          <fieldset className="form-purchase" disabled={isSubmitting}>
+          {/* <fieldset className="form-purchase" disabled={isSubmitting}>
             <legend className="form-purchase__legend">PURCHASE TYPE:</legend>
             <div className="form-purchase__options">
               <label className="form-purchase__option">
@@ -175,7 +175,7 @@ export default function FormScreen({ onSubmit }) {
                 <span>IN STORE</span>
               </label>
             </div>
-          </fieldset>
+          </fieldset> */}
 
           {error ? <p className="form-panel__error">{error}</p> : null}
 
