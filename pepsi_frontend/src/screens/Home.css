@@ -82,6 +82,23 @@
   display: none;
 }
 
+/* Mobile only — stronger gradient cue on GET STARTED */
+.home__cta-btn--mobile {
+  background: linear-gradient(
+    105deg,
+    #5eb0ff 0%,
+    #1a4dff 28%,
+    #0a1f8a 62%,
+    #02061a 100%
+  );
+  background-size: 180% 100%;
+  animation: cta-gradient-shift 3.2s ease-in-out infinite;
+  box-shadow:
+    0 0 0 2px rgba(80, 160, 255, 0.45),
+    0 8px 28px rgba(0, 40, 160, 0.55),
+    0 0 22px rgba(60, 140, 255, 0.35);
+}
+
 .home__stage {
   position: relative;
   flex: 1;
@@ -95,17 +112,94 @@
   padding: 0 0.35rem;
 }
 
-.home__artists {
+/* Mobile only — expanding blue pulse behind YS */
+.home__pulse {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 1;
+  width: min(92vw, 22rem);
+  height: min(92vw, 22rem);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.home__pulse-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(90, 170, 255, 0.55);
+  box-shadow: 0 0 18px rgba(60, 140, 255, 0.25);
+  opacity: 0;
+  animation: pulse-expand 3.6s cubic-bezier(0.15, 0.65, 0.35, 1) infinite;
+}
+
+.home__pulse-ring:nth-child(2) {
+  animation-delay: 1.2s;
+}
+
+.home__pulse-ring:nth-child(3) {
+  animation-delay: 2.4s;
+}
+
+.home__artists-wrap {
   position: relative;
   z-index: 5;
   width: min(108%, 28rem);
   max-width: none;
+  margin-bottom: -1.75rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.home__artists {
+  position: relative;
+  z-index: 5;
+  width: 100%;
   height: auto;
   object-fit: contain;
   object-position: bottom center;
   pointer-events: none;
-  margin-bottom: -1.75rem;
   mix-blend-mode: screen;
+}
+
+/* Mobile only — soft reflection sweep on blue lenses */
+.home__glass-shine {
+  position: absolute;
+  z-index: 7;
+  width: 13.5%;
+  height: 4.8%;
+  border-radius: 48% / 58%;
+  pointer-events: none;
+  overflow: hidden;
+  background: linear-gradient(
+    118deg,
+    transparent 8%,
+    rgba(160, 220, 255, 0.2) 32%,
+    rgba(255, 255, 255, 0.85) 48%,
+    rgba(140, 210, 255, 0.35) 58%,
+    transparent 78%
+  );
+  background-size: 240% 100%;
+  mix-blend-mode: screen;
+  filter: blur(0.4px);
+  opacity: 0.9;
+  animation: glass-shine 4.2s ease-in-out infinite;
+}
+
+.home__glass-shine--left {
+  top: 17.5%;
+  left: 28.5%;
+  transform: rotate(-6deg) skewX(-4deg);
+}
+
+.home__glass-shine--right {
+  top: 18%;
+  left: 55%;
+  width: 14.5%;
+  transform: rotate(4deg) skewX(3deg);
+  animation-delay: 0.55s;
 }
 
 .home__sticker {
@@ -114,7 +208,7 @@
   z-index: 6;
   height: auto;
   object-fit: contain;
-  animation: float-y 3.6s ease-in-out infinite;
+  animation: float-y 3.8s ease-in-out infinite;
 }
 
 /* Mobile — 4 stickers at red-mark spots around YS heads/shoulders */
@@ -165,13 +259,54 @@
     translate: 0 0;
   }
   50% {
-    translate: 0 -7px;
+    translate: 0 -5px;
+  }
+}
+
+@keyframes pulse-expand {
+  0% {
+    transform: scale(0.42);
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.28;
+  }
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes glass-shine {
+  0%,
+  100% {
+    background-position: 120% 0;
+    opacity: 0.35;
+  }
+  45%,
+  55% {
+    background-position: -20% 0;
+    opacity: 0.9;
+  }
+}
+
+@keyframes cta-gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
 @media (min-width: 390px) {
-  .home__artists {
+  .home__artists-wrap {
     width: min(112%, 30rem);
+  }
+
+  .home__artists {
+    width: 100%;
   }
 
   .home__sticker--cassette {
@@ -235,9 +370,19 @@
     flex: 1 1 0;
   }
 
-  .home__artists {
+  .home__artists-wrap {
     width: min(105%, 22rem);
     margin-bottom: -1.5rem;
+  }
+
+  .home__artists {
+    width: 100%;
+  }
+
+  .home__pulse {
+    top: 40%;
+    width: min(88vw, 18rem);
+    height: min(88vw, 18rem);
   }
 
   .home__sticker--cassette {
@@ -278,6 +423,35 @@
     left: auto;
     transform: rotate(300deg);
     animation-delay: 1s;
+  }
+}
+
+/* Mobile FX off from tablet up */
+@media (min-width: 768px) {
+  .home__pulse,
+  .home__glass-shine {
+    display: none;
+  }
+
+  .home__cta-btn--mobile {
+    animation: none;
+    background: linear-gradient(90deg, #1a4dff 0%, #0a1f8a 55%, #02061a 100%);
+    box-shadow:
+      0 0 0 2px rgba(0, 40, 160, 0.55),
+      0 8px 24px rgba(0, 20, 80, 0.55);
+  }
+
+  .home__artists {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home__pulse-ring,
+  .home__glass-shine,
+  .home__cta-btn--mobile,
+  .home__sticker {
+    animation: none !important;
   }
 }
 
@@ -351,7 +525,7 @@
     overflow: visible;
   }
 
-  .home__artists {
+  .home__artists-wrap {
     width: min(98%, 42rem);
     margin-bottom: -0.5rem;
   }
@@ -485,7 +659,7 @@
     padding: 0;
   }
 
-  .home__artists {
+  .home__artists-wrap {
     width: min(100%, 44rem);
     margin-bottom: 0;
   }
@@ -548,7 +722,7 @@
     font-size: 0.88rem;
   }
 
-  .home__artists {
+  .home__artists-wrap {
     width: min(92%, 30rem);
   }
 
@@ -633,7 +807,7 @@
     flex: 1 1 auto;
   }
 
-  .home__artists {
+  .home__artists-wrap {
     width: min(96%, 44rem);
   }
 

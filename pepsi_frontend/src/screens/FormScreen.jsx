@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CtaButton from '../components/CtaButton'
+import PulseBg from '../components/PulseBg'
 import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
 import music1Web from '../assets/images/home/web/music-1.png'
@@ -7,6 +8,7 @@ import music2Web from '../assets/images/home/web/music-2.png'
 import './FormScreen.css'
 
 const PHONE_RE = /^\+92[0-9]{10}$/
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const INITIAL = {
   name: '',
@@ -63,12 +65,25 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
+  const isFormReady =
+    Boolean(values.name.trim()) &&
+    !/\d/.test(values.name) &&
+    EMAIL_RE.test(values.email.trim()) &&
+    PHONE_RE.test(values.phone.trim()) &&
+    Boolean(values.packCode.trim()) &&
+    values.privacyConsent === true &&
+    values.ageConfirmed === true
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (isSubmitting) return
+    if (isSubmitting || !isFormReady) return
 
     if (/\d/.test(values.name)) {
       setError('Name cannot contain numbers.')
+      return
+    }
+    if (!EMAIL_RE.test(values.email.trim())) {
+      setError('Enter a valid email address.')
       return
     }
     if (!PHONE_RE.test(values.phone.trim())) {
@@ -100,6 +115,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
 
   return (
     <section className="form-screen">
+      <PulseBg className="form-screen__pulse" />
       <div className="form-stage">
         {MOBILE_DECOS.map((deco) => (
           <span
@@ -247,7 +263,11 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
           {error ? <p className="form-panel__error">{error}</p> : null}
 
           <div className="form-panel__cta">
-            <CtaButton type="submit" disabled={isSubmitting} />
+            <CtaButton
+              type="submit"
+              disabled={!isFormReady || isSubmitting}
+              className={isFormReady && !isSubmitting ? 'cta-btn--ready' : ''}
+            />
           </div>
         </form>
       </div>

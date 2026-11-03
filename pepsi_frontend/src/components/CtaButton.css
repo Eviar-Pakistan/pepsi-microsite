@@ -34,6 +34,43 @@
   opacity: 0.55;
   cursor: not-allowed;
   pointer-events: none;
+  filter: grayscale(0.25) brightness(0.85);
+  box-shadow:
+    0 0 0 2px rgba(0, 40, 160, 0.35),
+    0 6px 16px rgba(0, 20, 80, 0.35);
+}
+
+/* Unlocked / ready — stronger animated gradient */
+.cta-btn--ready:not(:disabled) {
+  background: linear-gradient(
+    105deg,
+    #5eb0ff 0%,
+    #1a4dff 28%,
+    #0a1f8a 62%,
+    #02061a 100%
+  );
+  background-size: 180% 100%;
+  animation: cta-ready-shift 3.2s ease-in-out infinite;
+  box-shadow:
+    0 0 0 2px rgba(80, 160, 255, 0.45),
+    0 8px 28px rgba(0, 40, 160, 0.55),
+    0 0 22px rgba(60, 140, 255, 0.35);
+}
+
+@keyframes cta-ready-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-btn--ready:not(:disabled) {
+    animation: none;
+  }
 }
 
 .cta-btn__label {

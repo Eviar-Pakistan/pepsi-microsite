@@ -1,3 +1,4 @@
+import PulseBg from '../components/PulseBg'
 import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
 import step1 from '../assets/images/how-it-works/step-1.png'
@@ -32,6 +33,7 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="hiw">
+      <PulseBg className="hiw__pulse" />
       <div className="hiw__heading">
         <img
           src={cassetteWeb}
@@ -47,8 +49,12 @@ export default function HowItWorks() {
       </div>
 
       <div className="hiw__grid">
-        {STEPS.map((step) => (
-          <article key={step.title} className="hiw-card">
+        {STEPS.map((step, index) => (
+          <article
+            key={step.title}
+            className="hiw-card"
+            style={{ '--hiw-float-delay': `${index * 0.35}s` }}
+          >
             <h2 className="hiw-card__title">{step.title}</h2>
             <img src={step.icon} alt="" className="hiw-card__icon" />
             <p className="hiw-card__text">{step.text}</p>

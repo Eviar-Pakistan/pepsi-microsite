@@ -49,12 +49,21 @@ export default function Home({ onGetVideo }) {
       </div>
 
       <div className="home__stage" aria-hidden="true">
+        <div className="home__pulse">
+          <span className="home__pulse-ring" />
+          <span className="home__pulse-ring" />
+          <span className="home__pulse-ring" />
+        </div>
         <img src={cassetteWeb} alt="" className="home__sticker home__sticker--cassette" />
         <img src={music1Web} alt="" className="home__sticker home__sticker--music-a" />
         <img src={music1Web} alt="" className="home__sticker home__sticker--music-b" />
         <img src={music2Web} alt="" className="home__sticker home__sticker--music-2" />
         <img src={headphoneWeb} alt="" className="home__sticker home__sticker--headphones" />
-        <img src={artistsWeb} alt="Young Stunners" className="home__artists" />
+        <div className="home__artists-wrap">
+          <img src={artistsWeb} alt="Young Stunners" className="home__artists" />
+          <span className="home__glass-shine home__glass-shine--left" />
+          <span className="home__glass-shine home__glass-shine--right" />
+        </div>
       </div>
     </section>
   )
