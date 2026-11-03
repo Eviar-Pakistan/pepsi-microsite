@@ -81,7 +81,7 @@ export default function App() {
           useAltBg
             ? {
                 '--shell-bg-mobile':
-                  screen === 'home' || screen === 'loading'
+                  screen === 'home'
                     ? `url(${mobileBg1})`
                     : `url(${mobileBg2})`,
                 /* Tablet home keeps mobile BG 1; laptop+ overrides home to web/bg.png in CSS */
