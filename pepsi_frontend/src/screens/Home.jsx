@@ -61,8 +61,6 @@ export default function Home({ onGetVideo }) {
         <img src={headphoneWeb} alt="" className="home__sticker home__sticker--headphones" />
         <div className="home__artists-wrap">
           <img src={artistsWeb} alt="Young Stunners" className="home__artists" />
-          <span className="home__glass-shine home__glass-shine--left" />
-          <span className="home__glass-shine home__glass-shine--right" />
         </div>
       </div>
     </section>
