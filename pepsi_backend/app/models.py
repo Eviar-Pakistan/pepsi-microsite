@@ -4,7 +4,10 @@ from django.db import models
 class User(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=254)
-    city = models.CharField(max_length=80)
+    phone = models.CharField(max_length=20, blank=True, default="")
+    pack_code = models.CharField(max_length=64, blank=True, default="")
+    # Kept for older rows; no longer collected on the form
+    city = models.CharField(max_length=80, blank=True, default="")
     privacy_consent = models.BooleanField(default=False)
     marketing_opt_in = models.BooleanField(default=False)
     age_confirmed = models.BooleanField(default=False)

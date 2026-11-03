@@ -1,0 +1,90 @@
+.legal-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.legal-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  background: rgba(0, 6, 40, 0.72);
+  cursor: pointer;
+}
+
+.legal-modal__panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 36rem);
+  max-height: min(82dvh, 40rem);
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.15rem;
+  background: rgba(8, 18, 70, 0.96);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 18px 50px rgba(0, 0, 20, 0.45);
+  overflow: hidden;
+}
+
+.legal-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.legal-modal__title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.legal-modal__close {
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.legal-modal__body {
+  padding: 1rem 1.05rem 1.35rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.legal-modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.legal-modal__body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .legal-modal__panel {
+    width: min(100%, 42rem);
+    max-height: min(84dvh, 44rem);
+  }
+
+  .legal-modal__title {
+    font-size: 1.05rem;
+  }
+}

@@ -2,13 +2,16 @@ import re
 
 from rest_framework import serializers
 
-NAME_CITY_RE = re.compile(r"^[A-Za-z][A-Za-z\s'.-]{0,99}$")
+NAME_RE = re.compile(r"^[A-Za-z][A-Za-z\s'.-]{0,99}$")
+PHONE_RE = re.compile(r"^\+92[0-9]{10}$")
+PACK_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
 
 
 class CreateVideoSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100, trim_whitespace=True)
     email = serializers.EmailField(max_length=254)
-    city = serializers.CharField(max_length=80, trim_whitespace=True)
+    phone = serializers.CharField(max_length=20, trim_whitespace=True)
+    packCode = serializers.CharField(max_length=64, trim_whitespace=True)
     privacyConsent = serializers.BooleanField()
     marketingOptIn = serializers.BooleanField(required=False, default=False)
     ageConfirmed = serializers.BooleanField()
@@ -24,19 +27,27 @@ class CreateVideoSerializer(serializers.Serializer):
         value = value.strip()
         if any(ch.isdigit() for ch in value):
             raise serializers.ValidationError("Name cannot contain numbers.")
-        if any(ord(c) < 32 for c in value) or not NAME_CITY_RE.fullmatch(value):
+        if any(ord(c) < 32 for c in value) or not NAME_RE.fullmatch(value):
             raise serializers.ValidationError("Enter a valid name.")
         return value
 
     def validate_email(self, value):
         return value.strip().lower()
 
-    def validate_city(self, value):
+    def validate_phone(self, value):
+        value = value.strip().replace(" ", "")
+        if not PHONE_RE.fullmatch(value):
+            raise serializers.ValidationError(
+                "Enter a valid Pakistani mobile number, e.g. +923001234567."
+            )
+        return value
+
+    def validate_packCode(self, value):
         value = value.strip()
-        if any(ch.isdigit() for ch in value):
-            raise serializers.ValidationError("City cannot contain numbers.")
-        if any(ord(c) < 32 for c in value) or not NAME_CITY_RE.fullmatch(value):
-            raise serializers.ValidationError("Enter a valid city.")
+        if not value:
+            raise serializers.ValidationError("Please enter your pack code.")
+        if not PACK_RE.fullmatch(value):
+            raise serializers.ValidationError("Enter a valid pack code.")
         return value
 
     def validate_privacyConsent(self, value):

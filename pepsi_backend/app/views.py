@@ -109,7 +109,8 @@ class CreateVideoView(APIView):
             user = User.objects.create(
                 name=data["name"],
                 email=data["email"],
-                city=data["city"],
+                phone=data["phone"],
+                pack_code=data.get("packCode") or "",
                 privacy_consent=True,
                 marketing_opt_in=bool(data.get("marketingOptIn")),
                 age_confirmed=True,

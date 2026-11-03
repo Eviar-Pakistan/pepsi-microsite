@@ -1,5 +1,5 @@
-import playIcon from '../assets/images/home/play-icon.png'
-import music from '../assets/images/home/music.png'
+import cassetteWeb from '../assets/images/home/web/cassette.png'
+import headphoneWeb from '../assets/images/home/web/headphone.png'
 import step1 from '../assets/images/how-it-works/step-1.png'
 import step2 from '../assets/images/how-it-works/step-2.png'
 import step3 from '../assets/images/how-it-works/step-3.png'
@@ -8,7 +8,7 @@ import './HowItWorks.css'
 
 const STEPS = [
   {
-    title: '1. GET IN',
+    title: '1. SCAN',
     icon: step1,
     text: 'YOUR QR IS WAITING INSIDE THE BOX.',
   },
@@ -18,7 +18,7 @@ const STEPS = [
     text: "TELL US WHO WE'RE MAKING THIS FOR.",
   },
   {
-    title: '3. PRESS PLAY',
+    title: '3. GET YOUR VIDEO',
     icon: step3,
     text: "THAT'S YOUR NAME IN THEIR BARS.",
   },
@@ -33,14 +33,17 @@ export default function HowItWorks() {
   return (
     <section className="hiw">
       <div className="hiw__heading">
-        <img src={playIcon} alt="" className="hiw__heading-icon hiw__heading-icon--play" />
-        <div className="hiw__heading-copy">
-          <h1 className="hiw__title">HOW IT WORKS</h1>
-          <p className="hiw__subtitle">
-            Four quick steps from your Pepsi pack to your Young Stunners drop.
-          </p>
-        </div>
-        <img src={music} alt="" className="hiw__heading-icon hiw__heading-icon--music" />
+        <img
+          src={cassetteWeb}
+          alt=""
+          className="hiw__heading-icon hiw__heading-icon--cassette"
+        />
+        <h1 className="hiw__title">HOW IT WORKS</h1>
+        <img
+          src={headphoneWeb}
+          alt=""
+          className="hiw__heading-icon hiw__heading-icon--headphones"
+        />
       </div>
 
       <div className="hiw__grid">

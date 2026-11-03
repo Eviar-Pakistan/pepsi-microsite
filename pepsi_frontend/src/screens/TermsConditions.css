@@ -52,3 +52,10 @@
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+.terms--modal {
+  flex: none;
+  padding: 0;
+  max-width: none;
+  margin: 0;
+}

@@ -5,9 +5,15 @@ export default function CtaButton({
   onClick,
   type = 'button',
   disabled = false,
+  className = '',
 }) {
   return (
-    <button type={type} className="cta-btn" onClick={onClick} disabled={disabled}>
+    <button
+      type={type}
+      className={`cta-btn${className ? ` ${className}` : ''}`}
+      onClick={onClick}
+      disabled={disabled}
+    >
       <span className="cta-btn__label">{children}</span>
       <span className="cta-btn__icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" width="14" height="14" fill="none">

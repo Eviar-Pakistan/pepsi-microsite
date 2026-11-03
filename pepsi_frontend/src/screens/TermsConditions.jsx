@@ -3,10 +3,10 @@ import './TermsConditions.css'
 const PRIVACY_URL =
   'https://platformassets.wspprod.com/pepsiredemptionpolicy-static/privacypolicy-eng.html'
 
-export default function TermsConditions() {
+export default function TermsConditions({ modal = true } = {}) {
   return (
-    <section className="terms">
-      <h1 className="terms__title">Terms &amp; Conditions</h1>
+    <section className={`terms${modal ? ' terms--modal' : ''}`}>
+      {modal ? null : <h1 className="terms__title">Terms &amp; Conditions</h1>}
       <p className="terms__lead">
         By entering into the activity, the participant (you, your) agrees to be bound by the
         following Terms &amp; Conditions:
@@ -25,7 +25,10 @@ export default function TermsConditions() {
       <ol className="terms__list">
         <li>Purchase the limited edition Pepsi x Young Stunners box from the Foodpanda website and application.</li>
         <li>Scan the QR code inside the purchased box.</li>
-        <li>Fill out the required information on the microsite including your name, city and email.</li>
+        <li>
+          Fill out the required information on the microsite including your name, email, mobile
+          number, and pack code.
+        </li>
         <li>
           Once submitted, your video with your customised RAP Young Stunners will be delivered as
           described on the microsite.

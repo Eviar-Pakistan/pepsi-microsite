@@ -1,29 +1,39 @@
 import { useState } from 'react'
 import CtaButton from '../components/CtaButton'
-import vinyl from '../assets/images/home/vinyl.png'
-import playIcon from '../assets/images/home/play-icon.png'
-import headphone from '../assets/images/home/headphone.png'
-import music from '../assets/images/home/music.png'
-import { PRIVACY_URL } from './TermsConditions'
+import cassetteWeb from '../assets/images/home/web/cassette.png'
+import headphoneWeb from '../assets/images/home/web/headphone.png'
+import music1Web from '../assets/images/home/web/music-1.png'
+import music2Web from '../assets/images/home/web/music-2.png'
 import './FormScreen.css'
+
+const PHONE_RE = /^\+92[0-9]{10}$/
 
 const INITIAL = {
   name: '',
   email: '',
-  city: '',
+  phone: '+92',
+  packCode: '',
   privacyConsent: false,
   marketingOptIn: false,
   ageConfirmed: false,
 }
 
-const DECOS = [
-  { src: vinyl, className: 'vinyl' },
-  { src: playIcon, className: 'play' },
-  { src: headphone, className: 'headphones' },
-  { src: music, className: 'music' },
+/* Mobile mock: music TL, cassette TR, headphones BL, music notes BR */
+const MOBILE_DECOS = [
+  { src: music1Web, className: 'music-1' },
+  { src: cassetteWeb, className: 'cassette' },
+  { src: headphoneWeb, className: 'headphones-web' },
+  { src: music2Web, className: 'music-2' },
 ]
 
-export default function FormScreen({ onSubmit, onOpenTerms }) {
+const WEB_DECOS = [
+  { src: music1Web, className: 'music-1' },
+  { src: headphoneWeb, className: 'headphones-web' },
+  { src: cassetteWeb, className: 'cassette' },
+  { src: music2Web, className: 'music-2' },
+]
+
+export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
   const [values, setValues] = useState(INITIAL)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -34,8 +44,23 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
       setValues((prev) => ({ ...prev, [name]: checked }))
       return
     }
-    const next = name === 'name' || name === 'city' ? value.replace(/\d/g, '') : value
-    setValues((prev) => ({ ...prev, [name]: next }))
+
+    if (name === 'name') {
+      setValues((prev) => ({ ...prev, name: value.replace(/\d/g, '') }))
+      return
+    }
+
+    if (name === 'phone') {
+      let next = value.replace(/[^\d+]/g, '')
+      if (!next.startsWith('+92')) {
+        next = `+92${next.replace(/^\+?92?/, '').replace(/\D/g, '')}`
+      }
+      const digits = next.slice(3).replace(/\D/g, '').slice(0, 10)
+      setValues((prev) => ({ ...prev, phone: `+92${digits}` }))
+      return
+    }
+
+    setValues((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e) => {
@@ -46,8 +71,12 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
       setError('Name cannot contain numbers.')
       return
     }
-    if (/\d/.test(values.city)) {
-      setError('City cannot contain numbers.')
+    if (!PHONE_RE.test(values.phone.trim())) {
+      setError('Enter a valid Pakistani mobile number, e.g. +923001234567.')
+      return
+    }
+    if (!values.packCode.trim()) {
+      setError('Please enter your pack code.')
       return
     }
     if (!values.privacyConsent) {
@@ -72,13 +101,22 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
   return (
     <section className="form-screen">
       <div className="form-stage">
-        {DECOS.map((deco) => (
+        {MOBILE_DECOS.map((deco) => (
           <span
-            key={deco.className}
-            className={`form-stage__deco form-stage__deco--${deco.className}`}
+            key={`m-${deco.className}`}
+            className={`form-stage__deco form-stage__deco--mobile form-stage__deco--${deco.className}`}
             aria-hidden="true"
           >
-            <span className="form-stage__deco-mask" />
+            <img src={deco.src} alt="" />
+          </span>
+        ))}
+
+        {WEB_DECOS.map((deco) => (
+          <span
+            key={`w-${deco.className}`}
+            className={`form-stage__deco form-stage__deco--web form-stage__deco--${deco.className}`}
+            aria-hidden="true"
+          >
             <img src={deco.src} alt="" />
           </span>
         ))}
@@ -119,14 +157,29 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
             </label>
 
             <label className="form-field">
-              <span className="form-field__label">CITY:</span>
+              <span className="form-field__label">PHONE NUMBER:</span>
+              <input
+                className="form-field__input"
+                type="tel"
+                name="phone"
+                value={values.phone}
+                onChange={handleChange}
+                autoComplete="tel"
+                inputMode="tel"
+                placeholder="+923001234567"
+                required
+                disabled={isSubmitting}
+              />
+            </label>
+
+            <label className="form-field">
+              <span className="form-field__label">ENTER PACK CODE:</span>
               <input
                 className="form-field__input"
                 type="text"
-                name="city"
-                value={values.city}
+                name="packCode"
+                value={values.packCode}
                 onChange={handleChange}
-                autoComplete="address-level2"
                 required
                 disabled={isSubmitting}
               />
@@ -149,9 +202,9 @@ export default function FormScreen({ onSubmit, onOpenTerms }) {
                   Ts &amp; Cs
                 </button>{' '}
                 and consent to the use of my personal data as per the{' '}
-                <a href={PRIVACY_URL} target="_blank" rel="noopener noreferrer">
+                <button type="button" className="form-consent__link" onClick={onOpenPrivacy}>
                   Privacy Notice
-                </a>
+                </button>
                 . I have the option to opt-out anytime.
                 <span className="form-consent__required"> *</span>
               </span>

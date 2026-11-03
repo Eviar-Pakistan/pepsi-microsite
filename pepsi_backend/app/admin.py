@@ -8,7 +8,8 @@ class UserAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "email",
-        "city",
+        "phone",
+        "pack_code",
         "privacy_consent",
         "marketing_opt_in",
         "age_confirmed",
@@ -16,10 +17,12 @@ class UserAdmin(admin.ModelAdmin):
         "created_at",
     )
     list_filter = ("privacy_consent", "marketing_opt_in", "age_confirmed")
-    search_fields = ("email", "name", "city")
+    search_fields = ("email", "name", "phone", "pack_code")
     readonly_fields = (
         "name",
         "email",
+        "phone",
+        "pack_code",
         "city",
         "privacy_consent",
         "marketing_opt_in",

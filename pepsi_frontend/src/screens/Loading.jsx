@@ -1,21 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
 import vinyl from '../assets/images/home/vinyl.png'
-import music from '../assets/images/home/music.png'
-import playIcon from '../assets/images/home/play-icon.png'
+import pepsiLogo from '../assets/images/home/pepsi-logo.png'
+import cassetteWeb from '../assets/images/home/web/cassette.png'
+import music2Web from '../assets/images/home/web/music-2.png'
 import { getVideoStatus } from '../api/videos'
 import './Loading.css'
 
 const SIZE = 220
-const STROKE = 4
+const STROKE = 5
 const RADIUS = (SIZE - STROKE) / 2
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 const HARD_TIMEOUT_MS = 15 * 60 * 1000
+/** Evenly fill the ring up to this %, then wait for API success */
+const PROGRESS_CAP = 92
+/** Time to reach PROGRESS_CAP evenly (ms) — leaves a gap until the job finishes */
+const RAMP_MS = 90_000
 
 export default function Loading({ orderId, onReady, onError }) {
-  const [progress, setProgress] = useState(8)
+  const [progress, setProgress] = useState(0)
   const startedAt = useRef(Date.now())
   const onReadyRef = useRef(onReady)
   const onErrorRef = useRef(onError)
+  const doneRef = useRef(false)
 
   useEffect(() => {
     onReadyRef.current = onReady
@@ -24,12 +30,11 @@ export default function Loading({ orderId, onReady, onError }) {
 
   useEffect(() => {
     const id = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 92) return prev
-        const bump = prev < 40 ? 2.2 : prev < 70 ? 1.2 : 0.5
-        return Math.min(92, prev + bump)
-      })
-    }, 120)
+      if (doneRef.current) return
+      const elapsed = Date.now() - startedAt.current
+      const next = Math.min(PROGRESS_CAP, (elapsed / RAMP_MS) * PROGRESS_CAP)
+      setProgress(next)
+    }, 200)
 
     return () => clearInterval(id)
   }, [])
@@ -41,7 +46,7 @@ export default function Loading({ orderId, onReady, onError }) {
     let timeoutId
 
     const poll = async () => {
-      if (cancelled) return
+      if (cancelled || doneRef.current) return
 
       if (Date.now() - startedAt.current > HARD_TIMEOUT_MS) {
         onErrorRef.current?.('This is taking longer than expected. Please try again later.')
@@ -53,12 +58,14 @@ export default function Loading({ orderId, onReady, onError }) {
         if (cancelled) return
 
         if (job.status === 'success' && job.videoUrl) {
+          doneRef.current = true
           setProgress(100)
           onReadyRef.current?.(job)
           return
         }
 
         if (job.status === 'rejected' || job.status === 'failed') {
+          doneRef.current = true
           onErrorRef.current?.(job.message || 'We couldn’t finish your video. Please try again.')
           return
         }
@@ -93,10 +100,18 @@ export default function Loading({ orderId, onReady, onError }) {
       </div>
 
       <div className="loading__vinyl-wrap">
-        <img src={playIcon} alt="" className="loading__deco loading__deco--play" />
-        <img src={music} alt="" className="loading__deco loading__deco--music" />
+        <img
+          src={music2Web}
+          alt=""
+          className="loading__deco loading__deco--music"
+        />
+        <img
+          src={cassetteWeb}
+          alt=""
+          className="loading__deco loading__deco--cassette"
+        />
 
-        <div className="loading__ring">
+        <div className="loading__ring" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
           <svg
             className="loading__svg"
             width={SIZE}
@@ -124,7 +139,11 @@ export default function Loading({ orderId, onReady, onError }) {
               strokeLinecap="round"
             />
           </svg>
-          <img src={vinyl} alt="" className="loading__vinyl" />
+
+          <div className="loading__disc">
+            <img src={vinyl} alt="" className="loading__vinyl" />
+            <img src={pepsiLogo} alt="Pepsi" className="loading__logo" />
+          </div>
         </div>
       </div>
     </section>
