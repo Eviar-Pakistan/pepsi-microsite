@@ -9,11 +9,63 @@
   overflow: hidden;
 }
 
-.form-screen__pulse {
-  top: 50%;
-  width: min(120vw, 36rem);
-  height: min(120vw, 36rem);
+/* Mobile only — circles 2 pulses over shell Background.png */
+.form-screen__mobile-fx {
+  position: absolute;
+  inset: 0;
   z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.form-screen__mobile-fx-circles {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(165%, 42rem);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  object-fit: contain;
+  animation: form-circles-pulse 3.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes form-circles-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Tablet + laptop — web circle 1 (hidden on mobile) */
+.form-screen__web-fx {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.form-screen__web-fx-circles {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(120vh, 95vw);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  object-fit: contain;
+  animation: form-circles-pulse 3.4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .form-stage {
@@ -294,6 +346,18 @@
 
 /* ========== TABLET+ (2×2 fields + Rayyan web stickers) ========== */
 @media (min-width: 768px) {
+  .form-screen__mobile-fx {
+    display: none;
+  }
+
+  .form-screen__web-fx {
+    display: block;
+  }
+
+  .form-screen__web-fx-circles {
+    width: max(100vw, 100vh);
+  }
+
   .form-screen {
     padding: 1.5rem 2rem 2rem;
     align-items: center;
@@ -732,5 +796,18 @@
     width: 5.8rem;
     bottom: -1.3rem;
     right: -1.65rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .form-screen__web-fx-circles {
+    width: max(105vw, 105vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-screen__mobile-fx-circles,
+  .form-screen__web-fx-circles {
+    animation: none !important;
   }
 }

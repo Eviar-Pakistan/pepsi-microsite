@@ -6,6 +6,29 @@
   position: relative;
 }
 
+/* Mobile only — circles.png pulses over shell Background.png */
+.home__mobile-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.home__mobile-fx-circles {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(165%, 42rem);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  object-fit: contain;
+  animation: home-circles-pulse 3.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
 .home__top {
   position: relative;
   z-index: 6;
@@ -101,6 +124,7 @@
 
 .home__stage {
   position: relative;
+  z-index: 2;
   flex: 1;
   min-height: 22rem;
   margin-top: 0.85rem;
@@ -112,34 +136,14 @@
   padding: 0 0.35rem;
 }
 
-/* Mobile only — expanding blue pulse behind YS */
-.home__pulse {
-  position: absolute;
-  left: 50%;
-  top: 42%;
-  z-index: 1;
-  width: min(92vw, 22rem);
-  height: min(92vw, 22rem);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.home__pulse-ring {
+/* Tablet + laptop only — Web circle 2 (positioned on .home) */
+.home__web-fx {
+  display: none;
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(90, 170, 255, 0.55);
-  box-shadow: 0 0 18px rgba(60, 140, 255, 0.25);
-  opacity: 0;
-  animation: pulse-expand 3.6s cubic-bezier(0.15, 0.65, 0.35, 1) infinite;
-}
-
-.home__pulse-ring:nth-child(2) {
-  animation-delay: 1.2s;
-}
-
-.home__pulse-ring:nth-child(3) {
-  animation-delay: 2.4s;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .home__artists-wrap {
@@ -162,6 +166,128 @@
   object-position: bottom center;
   pointer-events: none;
   mix-blend-mode: screen;
+}
+
+/* Glasses lens reflection — one soft line, synced on all lenses (all breakpoints) */
+.home__lens-shine {
+  display: block;
+  position: absolute;
+  z-index: 6;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+}
+
+.home__lens-shine::after {
+  content: '';
+  position: absolute;
+  top: -40%;
+  width: 28%;
+  height: 180%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(255, 255, 255, 0.9) 50%,
+    rgba(200, 230, 255, 0.35) 65%,
+    transparent 100%
+  );
+  filter: blur(0.4px);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* Left artist — line travels TL → BR with face tilt */
+.home__lens-shine--ll::after,
+.home__lens-shine--lr::after {
+  left: 0;
+  transform: translateX(-180%) skewX(-18deg);
+  animation: lens-sheen-ltr 2.8s ease-in-out infinite;
+}
+
+.home__lens-shine--ll {
+  left: 30.5%;
+  top: 8.1%;
+  width: 5.8%;
+  height: 6%;
+  border-radius: 14% / 22%;
+  transform: rotate(-6deg);
+}
+
+.home__lens-shine--lr {
+  left: 37.7%;
+  top: 11.2%;
+  width: 4.4%;
+  height: 6%;
+  border-radius: 14% / 22%;
+  transform: rotate(8deg);
+}
+
+/* Right artist — line travels TR → BL with face tilt */
+.home__lens-shine--rl::after,
+.home__lens-shine--rr::after {
+  left: 0;
+  transform: translateX(280%) skewX(18deg);
+  animation: lens-sheen-rtl 2.8s ease-in-out infinite;
+}
+
+.home__lens-shine--rl {
+  left: 49.8%;
+  top: 15.5%;
+  width: 4.6%;
+  height: 8.2%;
+  border-radius: 40%;
+  transform: rotate(-18deg);
+}
+
+.home__lens-shine--rr {
+  left: 54.1%;
+  top: 12.8%;
+  width: 5.4%;
+  height: 6.5%;
+  border-radius: 40%;
+  transform: rotate(-10deg);
+}
+
+@keyframes lens-sheen-ltr {
+  0%,
+  15% {
+    transform: translateX(-180%) skewX(-18deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(320%) skewX(-18deg);
+    opacity: 0.95;
+  }
+  65%,
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes lens-sheen-rtl {
+  0%,
+  15% {
+    transform: translateX(280%) skewX(18deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(-220%) skewX(18deg);
+    opacity: 0.95;
+  }
+  65%,
+  100% {
+    transform: translateX(-220%) skewX(18deg);
+    opacity: 0;
+  }
 }
 
 .home__sticker {
@@ -225,17 +351,15 @@
   }
 }
 
-@keyframes pulse-expand {
-  0% {
-    transform: scale(0.42);
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.28;
-  }
+@keyframes home-circles-pulse {
+  0%,
   100% {
-    transform: scale(1.15);
-    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
   }
 }
 
@@ -328,12 +452,6 @@
     width: 100%;
   }
 
-  .home__pulse {
-    top: 40%;
-    width: min(88vw, 18rem);
-    height: min(88vw, 18rem);
-  }
-
   .home__sticker--cassette {
     width: 3.85rem;
     top: 2%;
@@ -375,10 +493,28 @@
   }
 }
 
-/* Mobile FX off from tablet up */
+/* Mobile FX off from tablet up; web circles on */
 @media (min-width: 768px) {
-  .home__pulse {
+  .home__mobile-fx {
     display: none;
+  }
+
+  .home__web-fx {
+    display: block;
+  }
+
+  .home__web-fx-circles {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    width: min(120vh, 92%);
+    height: auto;
+    max-width: none;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    object-fit: contain;
+    animation: home-web-circles-pulse 3.4s ease-in-out infinite;
+    will-change: transform, opacity;
   }
 
   .home__cta-btn--mobile {
@@ -394,10 +530,24 @@
   }
 }
 
+@keyframes home-web-circles-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .home__pulse-ring,
+  .home__mobile-fx-circles,
+  .home__web-fx-circles,
   .home__cta-btn--mobile,
-  .home__sticker {
+  .home__sticker,
+  .home__lens-shine::after {
     animation: none !important;
   }
 }
@@ -604,6 +754,13 @@
     align-items: flex-end;
     justify-content: center;
     padding: 0;
+  }
+
+  /* Full-home positioning — larger rings, slightly right of center-left */
+  .home__web-fx-circles {
+    left: 54%;
+    top: 50%;
+    width: min(195vh, 140vw);
   }
 
   .home__artists-wrap {

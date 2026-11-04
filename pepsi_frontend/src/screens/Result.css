@@ -6,9 +6,71 @@
   padding: 1.5rem 1.35rem 2.5rem;
   text-align: center;
   gap: 1.75rem;
+  position: relative;
+}
+
+/* Mobile only — circles 2 pulses over shell Background.png */
+.result__mobile-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.result__mobile-fx-circles {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(165%, 42rem);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  object-fit: contain;
+  animation: result-circles-pulse 3.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes result-circles-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 1;
+  }
+}
+
+/* Tablet + laptop — web circle 1 (same as form) */
+.result__web-fx {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.result__web-fx-circles {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(120vh, 95vw);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  object-fit: contain;
+  animation: result-circles-pulse 3.4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .result__copy {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -36,6 +98,8 @@
 }
 
 .result__player-wrap {
+  position: relative;
+  z-index: 1;
   width: min(100%, 22rem);
   aspect-ratio: 9 / 16;
   max-height: min(52vh, 28rem);
@@ -63,6 +127,8 @@
 }
 
 .result__actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -97,6 +163,10 @@ a.result__download {
 
 /* ========== TABLET (iPad Mini) ========== */
 @media (min-width: 768px) and (max-width: 1023px) {
+  .result__mobile-fx {
+    display: none;
+  }
+
   .result {
     justify-content: space-evenly;
     min-height: 100%;
@@ -282,5 +352,32 @@ a.result__download {
   .result__actions .cta-btn__icon {
     width: 2rem;
     height: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .result__mobile-fx {
+    display: none;
+  }
+
+  .result__web-fx {
+    display: block;
+  }
+
+  .result__web-fx-circles {
+    width: max(100vw, 100vh);
+  }
+}
+
+@media (min-width: 1024px) {
+  .result__web-fx-circles {
+    width: max(105vw, 105vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .result__mobile-fx-circles,
+  .result__web-fx-circles {
+    animation: none !important;
   }
 }

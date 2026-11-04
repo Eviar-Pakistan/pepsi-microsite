@@ -9,10 +9,10 @@ import Result from './screens/Result'
 import TermsConditions from './screens/TermsConditions'
 import PrivacyNotice from './screens/PrivacyNotice'
 import { createVideo } from './api/videos'
-import webBg from './assets/images/home/web/bg.png'
 import webBg1 from './assets/images/home/web/bg-1.png'
-import mobileBg1 from './assets/images/home/mobile/bg-1.png'
+import webBackground from './assets/images/home/web/Background web.png'
 import mobileBg2 from './assets/images/home/mobile/bg-2.png'
+import mobileBackground from './assets/images/home/mobile/Background.png'
 import './App.css'
 
 function shellBgClass(screen) {
@@ -81,16 +81,30 @@ export default function App() {
           useAltBg
             ? {
                 '--shell-bg-mobile':
-                  screen === 'home'
-                    ? `url(${mobileBg1})`
+                  screen === 'home' ||
+                  screen === 'form' ||
+                  screen === 'loading' ||
+                  screen === 'how-it-works' ||
+                  screen === 'result'
+                    ? `url(${mobileBackground})`
                     : `url(${mobileBg2})`,
-                /* Tablet home keeps mobile BG 1; laptop+ overrides home to web/bg.png in CSS */
+                /* Tablet + laptop flow screens use Background web.png */
                 '--shell-bg-desktop':
-                  screen === 'home'
-                    ? `url(${mobileBg1})`
+                  screen === 'home' ||
+                  screen === 'form' ||
+                  screen === 'how-it-works' ||
+                  screen === 'loading' ||
+                  screen === 'result'
+                    ? `url(${webBackground})`
                     : `url(${webBg1})`,
                 '--shell-bg-laptop':
-                  screen === 'home' ? `url(${webBg})` : `url(${webBg1})`,
+                  screen === 'home' ||
+                  screen === 'form' ||
+                  screen === 'how-it-works' ||
+                  screen === 'loading' ||
+                  screen === 'result'
+                    ? `url(${webBackground})`
+                    : `url(${webBg1})`,
               }
             : undefined
         }

@@ -1,5 +1,7 @@
 import CtaButton from '../components/CtaButton'
 import { getDownloadUrl } from '../api/videos'
+import mobileCircles2 from '../assets/images/home/mobile/circles 2 mobile.png'
+import webCircle1 from '../assets/images/home/web/web circle 1.png'
 import './Result.css'
 
 export default function Result({ orderId, videoUrl, onAgain }) {
@@ -7,6 +9,15 @@ export default function Result({ orderId, videoUrl, onAgain }) {
 
   return (
     <section className="result">
+      {/* Mobile only — pulse circles 2 over shell Background.png */}
+      <div className="result__mobile-fx" aria-hidden="true">
+        <img src={mobileCircles2} alt="" className="result__mobile-fx-circles" />
+      </div>
+      {/* Tablet + laptop — pulse web circle 1 over Background web.png (same as form) */}
+      <div className="result__web-fx" aria-hidden="true">
+        <img src={webCircle1} alt="" className="result__web-fx-circles" />
+      </div>
+
       <div className="result__copy">
         <h1 className="result__title">YOUR DROP IS READY</h1>
         <p className="result__subtitle">Play it now or download your Young Stunners video.</p>

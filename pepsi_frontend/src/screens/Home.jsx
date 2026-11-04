@@ -7,11 +7,23 @@ import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
 import music1Web from '../assets/images/home/web/music-1.png'
 import music2Web from '../assets/images/home/web/music-2.png'
+import mobileCircles from '../assets/images/home/mobile/circles.png'
+import webCircle2 from '../assets/images/home/web/Web circle 2.png'
 import './Home.css'
 
 export default function Home({ onGetVideo }) {
   return (
     <section className="home">
+      {/* Mobile only — pulse the circles.png asset (Background.png is on the shell) */}
+      <div className="home__mobile-fx" aria-hidden="true">
+        <img src={mobileCircles} alt="" className="home__mobile-fx-circles" />
+      </div>
+
+      {/* Tablet + laptop — pulse Web circle 2 over Background web.png */}
+      <div className="home__web-fx" aria-hidden="true">
+        <img src={webCircle2} alt="" className="home__web-fx-circles" />
+      </div>
+
       <div className="home__top">
         <div className="home__lockup">
           <img
@@ -49,11 +61,6 @@ export default function Home({ onGetVideo }) {
       </div>
 
       <div className="home__stage" aria-hidden="true">
-        <div className="home__pulse">
-          <span className="home__pulse-ring" />
-          <span className="home__pulse-ring" />
-          <span className="home__pulse-ring" />
-        </div>
         <img src={cassetteWeb} alt="" className="home__sticker home__sticker--cassette" />
         <img src={music1Web} alt="" className="home__sticker home__sticker--music-a" />
         <img src={music1Web} alt="" className="home__sticker home__sticker--music-b" />
@@ -61,6 +68,11 @@ export default function Home({ onGetVideo }) {
         <img src={headphoneWeb} alt="" className="home__sticker home__sticker--headphones" />
         <div className="home__artists-wrap">
           <img src={artistsWeb} alt="Young Stunners" className="home__artists" />
+          {/* Diagonal sheen over blue glasses lenses */}
+          <span className="home__lens-shine home__lens-shine--ll" aria-hidden="true" />
+          <span className="home__lens-shine home__lens-shine--lr" aria-hidden="true" />
+          <span className="home__lens-shine home__lens-shine--rl" aria-hidden="true" />
+          <span className="home__lens-shine home__lens-shine--rr" aria-hidden="true" />
         </div>
       </div>
     </section>
