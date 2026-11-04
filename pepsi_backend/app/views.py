@@ -94,6 +94,15 @@ class CreateVideoView(APIView):
             raise AppError(400, first_error(ser.errors), "VALIDATION")
 
         data = ser.validated_data
+        phone = data["phone"]
+        limit = settings.MAX_ENTRIES_PER_PHONE
+        if limit >= 0 and User.objects.filter(phone=phone).count() >= limit:
+            raise AppError(
+                429,
+                "You have exceeded the number of entries allowed for this phone number.",
+                "PHONE_ENTRY_LIMIT",
+            )
+
         order_id = f"pepsi-{uuid.uuid4()}"
 
         # Call TrueFan first. If this fails, nothing is saved.

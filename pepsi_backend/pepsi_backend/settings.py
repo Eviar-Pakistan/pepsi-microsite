@@ -18,6 +18,16 @@ def env_list(name):
     return [x.strip() for x in os.environ.get(name, "").split(",") if x.strip()]
 
 
+def env_int(name, default):
+    raw = os.environ.get(name)
+    if raw is None or not str(raw).strip():
+        return default
+    try:
+        return int(str(raw).strip())
+    except ValueError:
+        return default
+
+
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "").strip()
 if not SECRET_KEY:
     raise RuntimeError("Set DJANGO_SECRET_KEY")
@@ -97,6 +107,8 @@ TRUEFAN_TEMPLATE_ID = os.environ.get("TRUEFAN_TEMPLATE_ID", "").strip()
 TRUEFAN_VIDEO_HOSTS = [h.lower() for h in env_list("TRUEFAN_VIDEO_HOSTS")]
 TRUEFAN_TIMEOUT = (5, 10)
 MAX_VIDEO_BYTES = 100 * 1024 * 1024
+# Max form submissions allowed per phone number (User rows). Change via env.
+MAX_ENTRIES_PER_PHONE = env_int("MAX_ENTRIES_PER_PHONE", 3)
 
 CACHES = {
     "default": {
