@@ -57,12 +57,8 @@ export default function HowItWorks() {
       </div>
 
       <div className="hiw__grid">
-        {STEPS.map((step, index) => (
-          <article
-            key={step.title}
-            className="hiw-card"
-            style={{ '--hiw-float-delay': `${index * 0.35}s` }}
-          >
+        {STEPS.map((step) => (
+          <article key={step.title} className="hiw-card">
             <h2 className="hiw-card__title">{step.title}</h2>
             <img src={step.icon} alt="" className="hiw-card__icon" />
             <p className="hiw-card__text">{step.text}</p>

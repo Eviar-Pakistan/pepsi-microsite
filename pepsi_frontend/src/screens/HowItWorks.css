@@ -103,6 +103,9 @@
 .hiw__heading-icon--cassette {
   width: 3.35rem;
   transform: rotate(-10deg);
+  rotate: 20deg;
+  position: relative;
+  bottom: 1.2rem;
 }
 
 /* Keep Rayyan headset orientation as designed */
@@ -110,6 +113,10 @@
   width: 3.6rem;
   transform: none;
   animation-delay: 0.6s;
+  rotate: 16deg;
+  /* Mobile — nudge slightly below title baseline */
+  position: relative;
+  top: 1.5rem;
 }
 
 .hiw__grid {
@@ -141,8 +148,6 @@
     0 10px 28px rgba(0, 0, 30, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   overflow: hidden;
-  animation: hiw-card-float 4s ease-in-out infinite;
-  animation-delay: var(--hiw-float-delay, 0s);
 }
 
 .hiw-card__title {
@@ -190,19 +195,8 @@
   }
 }
 
-@keyframes hiw-card-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -4px;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hiw__heading-icon,
-  .hiw-card {
+  .hiw__heading-icon {
     animation: none !important;
   }
 }
@@ -500,6 +494,10 @@
 
   .hiw__web-fx-circles {
     width: max(100vw, 100vh);
+  }
+
+  .hiw__heading-icon--headphones {
+    top: 0;
   }
 }
 
