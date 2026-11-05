@@ -496,7 +496,7 @@
 /* iPhone 15 Pro Max / similar large phones — nudge middle music sticker up */
 @media (min-width: 428px) and (max-width: 440px) and (min-height: 860px) and (orientation: portrait) {
   .home__sticker--music-b {
-    top: 18%;
+    top: 22%;
   }
 }
 
