@@ -3,6 +3,7 @@ import re
 from rest_framework import serializers
 
 NAME_RE = re.compile(r"^[A-Za-z]+(?: [A-Za-z]+)*$")
+EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 PHONE_RE = re.compile(r"^\+92[0-9]{10}$")
 PACK_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
 NAME_MAX = 40
@@ -39,7 +40,12 @@ class CreateVideoSerializer(serializers.Serializer):
         return value
 
     def validate_email(self, value):
-        return value.strip().lower()
+        value = value.strip().lower()
+        if any(ord(c) > 127 for c in value) or not EMAIL_RE.fullmatch(value):
+            raise serializers.ValidationError(
+                "Enter a valid English email address (letters, numbers, and @ . _ % + - only)."
+            )
+        return value
 
     def validate_phone(self, value):
         value = value.strip().replace(" ", "")

@@ -9,7 +9,8 @@ import webCircle1 from '../assets/images/home/web/web circle 1.png'
 import './FormScreen.css'
 
 const PHONE_RE = /^\+92[0-9]{10}$/
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+/** ASCII / English email only — no non-English scripts */
+const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 /** English letters + single spaces between words; max 40 chars */
 const NAME_MAX = 40
 const NAME_RE = /^[A-Za-z]+(?: [A-Za-z]+)*$/
@@ -19,6 +20,10 @@ function sanitizeName(value) {
     .replace(/[^A-Za-z ]/g, '')
     .replace(/ {2,}/g, ' ')
     .slice(0, NAME_MAX)
+}
+
+function sanitizeEmail(value) {
+  return value.replace(/[^A-Za-z0-9.@_%+-]/g, '').slice(0, 254)
 }
 
 const INITIAL = {
@@ -60,6 +65,11 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
 
     if (name === 'name') {
       setValues((prev) => ({ ...prev, name: sanitizeName(value) }))
+      return
+    }
+
+    if (name === 'email') {
+      setValues((prev) => ({ ...prev, email: sanitizeEmail(value) }))
       return
     }
 
@@ -107,7 +117,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
       return
     }
     if (!EMAIL_RE.test(values.email.trim())) {
-      setError('Enter a valid email address.')
+      setError('Enter a valid English email address (letters, numbers, and @ . _ % + - only).')
       return
     }
     if (!PHONE_RE.test(values.phone.trim())) {
@@ -201,6 +211,9 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
                 value={values.email}
                 onChange={handleChange}
                 autoComplete="email"
+                maxLength={254}
+                inputMode="email"
+                title="English letters and numbers only"
                 required
                 disabled={isSubmitting}
               />
