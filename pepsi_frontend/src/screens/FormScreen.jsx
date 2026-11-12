@@ -10,6 +10,16 @@ import './FormScreen.css'
 
 const PHONE_RE = /^\+92[0-9]{10}$/
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+/** English letters + single spaces between words; max 40 chars */
+const NAME_MAX = 40
+const NAME_RE = /^[A-Za-z]+(?: [A-Za-z]+)*$/
+
+function sanitizeName(value) {
+  return value
+    .replace(/[^A-Za-z ]/g, '')
+    .replace(/ {2,}/g, ' ')
+    .slice(0, NAME_MAX)
+}
 
 const INITIAL = {
   name: '',
@@ -49,7 +59,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     }
 
     if (name === 'name') {
-      setValues((prev) => ({ ...prev, name: value.replace(/\d/g, '') }))
+      setValues((prev) => ({ ...prev, name: sanitizeName(value) }))
       return
     }
 
@@ -66,9 +76,14 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
+  const nameTrimmed = values.name.trim()
+  const isNameValid =
+    nameTrimmed.length > 0 &&
+    nameTrimmed.length <= NAME_MAX &&
+    NAME_RE.test(nameTrimmed)
+
   const isFormReady =
-    Boolean(values.name.trim()) &&
-    !/\d/.test(values.name) &&
+    isNameValid &&
     EMAIL_RE.test(values.email.trim()) &&
     PHONE_RE.test(values.phone.trim()) &&
     Boolean(values.packCode.trim()) &&
@@ -79,8 +94,16 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     e.preventDefault()
     if (isSubmitting || !isFormReady) return
 
-    if (/\d/.test(values.name)) {
-      setError('Name cannot contain numbers.')
+    if (!nameTrimmed) {
+      setError('Please enter your name.')
+      return
+    }
+    if (nameTrimmed.length > NAME_MAX) {
+      setError('Name must be 40 characters or fewer.')
+      return
+    }
+    if (!NAME_RE.test(nameTrimmed)) {
+      setError('Name can only use English letters (and spaces between words).')
       return
     }
     if (!EMAIL_RE.test(values.email.trim())) {
@@ -107,7 +130,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     setError('')
     setIsSubmitting(true)
     try {
-      await onSubmit(values)
+      await onSubmit({ ...values, name: nameTrimmed })
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
       setIsSubmitting(false)
@@ -161,6 +184,9 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
                 value={values.name}
                 onChange={handleChange}
                 autoComplete="name"
+                maxLength={NAME_MAX}
+                pattern="[A-Za-z]+( [A-Za-z]+)*"
+                title="English letters only, up to 40 characters"
                 required
                 disabled={isSubmitting}
               />

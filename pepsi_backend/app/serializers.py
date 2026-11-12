@@ -2,13 +2,14 @@ import re
 
 from rest_framework import serializers
 
-NAME_RE = re.compile(r"^[A-Za-z][A-Za-z\s'.-]{0,99}$")
+NAME_RE = re.compile(r"^[A-Za-z]+(?: [A-Za-z]+)*$")
 PHONE_RE = re.compile(r"^\+92[0-9]{10}$")
 PACK_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
+NAME_MAX = 40
 
 
 class CreateVideoSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=100, trim_whitespace=True)
+    name = serializers.CharField(max_length=NAME_MAX, trim_whitespace=True)
     email = serializers.EmailField(max_length=254)
     phone = serializers.CharField(max_length=20, trim_whitespace=True)
     packCode = serializers.CharField(max_length=64, trim_whitespace=True)
@@ -24,11 +25,17 @@ class CreateVideoSerializer(serializers.Serializer):
         return super().to_internal_value(data)
 
     def validate_name(self, value):
-        value = value.strip()
+        value = " ".join(value.split())
+        if not value:
+            raise serializers.ValidationError("Please enter your name.")
+        if len(value) > NAME_MAX:
+            raise serializers.ValidationError("Name must be 40 characters or fewer.")
         if any(ch.isdigit() for ch in value):
             raise serializers.ValidationError("Name cannot contain numbers.")
         if any(ord(c) < 32 for c in value) or not NAME_RE.fullmatch(value):
-            raise serializers.ValidationError("Enter a valid name.")
+            raise serializers.ValidationError(
+                "Name can only use English letters (and spaces between words)."
+            )
         return value
 
     def validate_email(self, value):
