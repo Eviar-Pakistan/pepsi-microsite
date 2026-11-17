@@ -165,7 +165,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     e.preventDefault()
     if (isSubmitting || !isFormReady) return
 
-    if (!validateNamePart(firstNameTrimmed, 'First name')) return
+    if (!validateNamePart(firstNameTrimmed, 'Name')) return
     if (!validateNamePart(lastNameTrimmed, 'Last name')) return
     if (!EMAIL_RE.test(values.email.trim())) {
       setError('Enter a valid English email address (letters, numbers, and @ . _ % + - only).')
@@ -242,7 +242,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
           <div className="form-fields">
             <div className="form-fields__names">
               <label className="form-field">
-                <span className="form-field__label">FIRST NAME:</span>
+                <span className="form-field__label">NAME:</span>
                 <input
                   className="form-field__input"
                   type="text"
