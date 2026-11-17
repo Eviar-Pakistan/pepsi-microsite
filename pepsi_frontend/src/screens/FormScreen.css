@@ -168,6 +168,70 @@
   cursor: not-allowed;
 }
 
+.form-field__control {
+  position: relative;
+  width: 100%;
+}
+
+.form-field__input--with-tip {
+  padding-right: 2.15rem;
+}
+
+.form-field__tip-btn {
+  position: absolute;
+  top: 50%;
+  right: 0.65rem;
+  transform: translateY(-50%);
+  width: 0.95rem;
+  height: 0.95rem;
+  border: none;
+  border-radius: 50%;
+  background: #e11b22;
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+
+.form-field__tip {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.45rem);
+  min-width: 11rem;
+  max-width: 16rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.45rem;
+  background: rgba(8, 16, 48, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffe6a0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  text-align: left;
+  text-transform: none;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  z-index: 5;
+}
+
+.form-field__tip-btn:hover .form-field__tip,
+.form-field__tip-btn:focus-visible .form-field__tip,
+.form-field__tip-btn.is-open .form-field__tip {
+  opacity: 1;
+  visibility: visible;
+}
+
 .form-consents {
   display: flex;
   flex-direction: column;
@@ -221,6 +285,7 @@
   text-align: center;
   line-height: 1.35;
 }
+
 
 .form-panel__cta {
   display: flex;

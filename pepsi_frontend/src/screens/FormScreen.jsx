@@ -63,6 +63,8 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
   const [values, setValues] = useState(INITIAL)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
+  const [openTip, setOpenTip] = useState(null)
+  const [touched, setTouched] = useState({ phone: false, packCode: false })
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -104,14 +106,42 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
   const isNamePartValid = (value) =>
     value.length > 0 && value.length <= NAME_PART_MAX && NAME_RE.test(value)
 
+  const phoneDigits = values.phone.replace(/\D/g, '').slice(2)
+  const isPhoneValid = PHONE_RE.test(values.phone.trim())
+  const phoneTipMessage = !isPhoneValid
+    ? phoneDigits.length < 10
+      ? `Needs 10 digits after +92 (${phoneDigits.length}/10).`
+      : 'Enter a valid Pakistani mobile, e.g. +923001234567.'
+    : null
+
+  const pack = values.packCode.trim()
+  const isPackValid = PACK_RE.test(pack)
+  const packTipMessage = !isPackValid
+    ? !pack
+      ? 'Enter a 5-character pack code.'
+      : `Pack code needs 5 characters (${pack.length}/5).`
+    : null
+
+  /* Show ! only after blur, if still invalid */
+  const showPhoneTip = touched.phone && Boolean(phoneTipMessage)
+  const showPackTip = touched.packCode && Boolean(packTipMessage)
+
+  const markTouched = (field) => {
+    setTouched((prev) => ({ ...prev, [field]: true }))
+  }
+
   const isFormReady =
     isNamePartValid(firstNameTrimmed) &&
     isNamePartValid(lastNameTrimmed) &&
     EMAIL_RE.test(values.email.trim()) &&
-    PHONE_RE.test(values.phone.trim()) &&
-    PACK_RE.test(values.packCode.trim()) &&
+    isPhoneValid &&
+    isPackValid &&
     values.privacyConsent === true &&
     values.ageConfirmed === true
+
+  const toggleTip = (id) => {
+    setOpenTip((prev) => (prev === id ? null : id))
+  }
 
   const validateNamePart = (value, label) => {
     if (!value) {
@@ -268,36 +298,78 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
 
             <label className="form-field">
               <span className="form-field__label">PHONE NUMBER:</span>
-              <input
-                className="form-field__input"
-                type="tel"
-                name="phone"
-                value={values.phone}
-                onChange={handleChange}
-                autoComplete="tel"
-                inputMode="tel"
-                placeholder="+923001234567"
-                required
-                disabled={isSubmitting}
-              />
+              <div className="form-field__control">
+                <input
+                  className={`form-field__input${showPhoneTip ? ' form-field__input--with-tip' : ''}`}
+                  type="tel"
+                  name="phone"
+                  value={values.phone}
+                  onChange={handleChange}
+                  onBlur={() => markTouched('phone')}
+                  autoComplete="tel"
+                  inputMode="tel"
+                  placeholder="+923001234567"
+                  required
+                  disabled={isSubmitting}
+                />
+                {showPhoneTip ? (
+                  <button
+                    type="button"
+                    className={`form-field__tip-btn${openTip === 'phone' ? ' is-open' : ''}`}
+                    aria-label="Phone number help"
+                    aria-expanded={openTip === 'phone'}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      toggleTip('phone')
+                    }}
+                  >
+                    !
+                    <span className="form-field__tip" role="tooltip">
+                      {phoneTipMessage}
+                    </span>
+                  </button>
+                ) : null}
+              </div>
             </label>
 
             <label className="form-field">
               <span className="form-field__label">ENTER PACK CODE:</span>
-              <input
-                className="form-field__input"
-                type="text"
-                name="packCode"
-                value={values.packCode}
-                onChange={handleChange}
-                maxLength={5}
-                inputMode="text"
-                autoCapitalize="characters"
-                placeholder="XXXXX"
-                title="5-character pack code"
-                required
-                disabled={isSubmitting}
-              />
+              <div className="form-field__control">
+                <input
+                  className={`form-field__input${showPackTip ? ' form-field__input--with-tip' : ''}`}
+                  type="text"
+                  name="packCode"
+                  value={values.packCode}
+                  onChange={handleChange}
+                  onBlur={() => markTouched('packCode')}
+                  maxLength={5}
+                  inputMode="text"
+                  autoCapitalize="characters"
+                  placeholder="XXXXX"
+                  title="5-character pack code"
+                  required
+                  disabled={isSubmitting}
+                />
+                {showPackTip ? (
+                  <button
+                    type="button"
+                    className={`form-field__tip-btn${openTip === 'pack' ? ' is-open' : ''}`}
+                    aria-label="Pack code help"
+                    aria-expanded={openTip === 'pack'}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      toggleTip('pack')
+                    }}
+                  >
+                    !
+                    <span className="form-field__tip" role="tooltip">
+                      {packTipMessage}
+                    </span>
+                  </button>
+                ) : null}
+              </div>
             </label>
           </div>
 
