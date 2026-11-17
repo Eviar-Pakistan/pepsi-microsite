@@ -59,12 +59,15 @@ def public_job(job):
 
 
 def first_error(errors):
-    if isinstance(errors, dict):
-        for v in errors.values():
-            return first_error(v)
-    if isinstance(errors, (list, tuple)) and errors:
-        return first_error(errors[0])
-    return str(errors)
+    try:
+        if isinstance(errors, dict):
+            for v in errors.values():
+                return first_error(v)
+        if isinstance(errors, (list, tuple)) and errors:
+            return first_error(errors[0])
+        return str(errors)
+    except Exception:
+        return "Check your details and try again."
 
 
 def get_job(order_id):
@@ -91,7 +94,11 @@ class CreateVideoView(APIView):
     def post(self, request):
         ser = CreateVideoSerializer(data=request.data)
         if not ser.is_valid():
-            raise AppError(400, first_error(ser.errors), "VALIDATION")
+            try:
+                msg = first_error(ser.errors)
+            except Exception:
+                msg = "Check your details and try again."
+            raise AppError(400, msg, "VALIDATION")
 
         data = ser.validated_data
         phone = data["phone"]

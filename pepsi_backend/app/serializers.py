@@ -39,9 +39,9 @@ class CreateVideoSerializer(serializers.Serializer):
 
     def to_internal_value(self, data):
         if not isinstance(data, dict):
-            raise serializers.ValidationError("Invalid payload.")
+            raise serializers.ValidationError({"non_field_errors": ["Invalid payload."]})
         if set(data.keys()) - set(self.fields):
-            raise serializers.ValidationError("Unknown field.")
+            raise serializers.ValidationError({"non_field_errors": ["Unknown field."]})
         return super().to_internal_value(data)
 
     def validate_firstName(self, value):
