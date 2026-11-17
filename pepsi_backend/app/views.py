@@ -109,7 +109,7 @@ class CreateVideoView(APIView):
         full_name = f"{first_name} {last_name}".strip()
 
         # Call TrueFan first. If this fails, nothing is saved.
-        payload = create_video(order_id, full_name)
+        payload = create_video(order_id, first_name)
 
         video_id = (
             (payload.get("data") or {}).get("video_id")
