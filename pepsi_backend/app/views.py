@@ -104,9 +104,12 @@ class CreateVideoView(APIView):
             )
 
         order_id = f"pepsi-{uuid.uuid4()}"
+        first_name = data["firstName"]
+        last_name = data["lastName"]
+        full_name = f"{first_name} {last_name}".strip()
 
         # Call TrueFan first. If this fails, nothing is saved.
-        payload = create_video(order_id, data["name"])
+        payload = create_video(order_id, full_name)
 
         video_id = (
             (payload.get("data") or {}).get("video_id")
@@ -116,7 +119,9 @@ class CreateVideoView(APIView):
 
         with transaction.atomic():
             user = User.objects.create(
-                name=data["name"],
+                name=full_name,
+                first_name=first_name,
+                last_name=last_name,
                 email=data["email"],
                 phone=data["phone"],
                 pack_code=data.get("packCode") or "",

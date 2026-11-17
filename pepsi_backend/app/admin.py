@@ -7,6 +7,8 @@ from .models import User, VideoJob
 class UserAdmin(admin.ModelAdmin):
     list_display = (
         "id",
+        "first_name",
+        "last_name",
         "email",
         "phone",
         "pack_code",
@@ -17,9 +19,11 @@ class UserAdmin(admin.ModelAdmin):
         "created_at",
     )
     list_filter = ("privacy_consent", "marketing_opt_in", "age_confirmed")
-    search_fields = ("email", "name", "phone", "pack_code")
+    search_fields = ("email", "name", "first_name", "last_name", "phone", "pack_code")
     readonly_fields = (
         "name",
+        "first_name",
+        "last_name",
         "email",
         "phone",
         "pack_code",

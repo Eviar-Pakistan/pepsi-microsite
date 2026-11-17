@@ -49,7 +49,7 @@ export default function Home({ onGetVideo }) {
         </h1>
 
         <p className="home__support">
-          Scan the code from the box or enter your details to get a custom rap video.
+          Scan the QR code from the box, enter the pack code & your details to get a custom rap video from Young Stunners
         </p>
 
         <div className="home__cta">

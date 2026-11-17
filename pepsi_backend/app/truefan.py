@@ -43,12 +43,13 @@ def truefan_post(path, body):
         raise AppError(502, "Servers are busy. Please try again in a few minutes.", "UPSTREAM_5XX") from exc
 
     if not r.ok:
-        # Log status only — never return upstream auth bodies to clients
-        logger.info(
-            "truefan http=%s path=%s vendor=%s",
+        body_preview = (r.text or "").strip()[:800]
+        logger.warning(
+            "truefan http=%s path=%s vendor=%s body=%s",
             r.status_code,
             path,
             settings.TRUEFAN_VENDOR_ID,
+            body_preview,
         )
         raise _map_http(r.status_code)
 
@@ -63,7 +64,11 @@ def create_video(order_id, person_name):
         "vendor_id": int(settings.TRUEFAN_VENDOR_ID),
         "template_id": settings.TRUEFAN_TEMPLATE_ID,
         "order_id": order_id,
-        "data": {"person_name": person_name},
+        "data": {
+            "Name": person_name,
+            "Name_Text": person_name,
+            "Yo_Name": person_name,
+        },
     }
     delay = 1
     for attempt in range(4):

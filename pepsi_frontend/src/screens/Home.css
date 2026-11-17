@@ -524,12 +524,25 @@
     will-change: transform, opacity;
   }
 
+  /* Keep mobile CTA static when hidden; pulse the web CTA instead */
   .home__cta-btn--mobile {
     animation: none;
-    background: linear-gradient(90deg, #1a4dff 0%, #0a1f8a 55%, #02061a 100%);
+  }
+
+  .home__cta-btn--web {
+    background: linear-gradient(
+      105deg,
+      #5eb0ff 0%,
+      #1a4dff 28%,
+      #0a1f8a 62%,
+      #02061a 100%
+    );
+    background-size: 180% 100%;
+    animation: cta-gradient-shift 3.2s ease-in-out infinite;
     box-shadow:
-      0 0 0 2px rgba(0, 40, 160, 0.55),
-      0 8px 24px rgba(0, 20, 80, 0.55);
+      0 0 0 2px rgba(80, 160, 255, 0.45),
+      0 8px 28px rgba(0, 40, 160, 0.55),
+      0 0 22px rgba(60, 140, 255, 0.35);
   }
 
   .home__artists {
@@ -553,6 +566,7 @@
   .home__mobile-fx-circles,
   .home__web-fx-circles,
   .home__cta-btn--mobile,
+  .home__cta-btn--web,
   .home__sticker,
   .home__lens-shine::after {
     animation: none !important;
@@ -770,9 +784,11 @@
     width: min(195vh, 140vw);
   }
 
+  /* Shift YS + stickers right so they sit on the circle center */
   .home__artists-wrap {
     width: min(100%, 44rem);
     margin-bottom: 0;
+    transform: translateX(30%);
   }
 
   /* 4 icons only on laptop+ (hide extra music duplicate) */
@@ -780,18 +796,18 @@
     display: none;
   }
 
-  /* Monitor: icons closer to YS */
+  /* Monitor: icons closer to YS, nudged right with characters */
   .home__sticker--cassette {
     width: 7.5rem;
     top: 12%;
-    left: 14%;
+    left: 22%;
     transform: rotate(-12deg);
   }
 
   .home__sticker--headphones {
     width: 7.75rem;
     top: 8%;
-    right: 14%;
+    right: 2%;
     transform: rotate(-28deg);
   }
 
@@ -799,7 +815,7 @@
     width: 5.75rem;
     top: auto;
     bottom: 16%;
-    left: 18%;
+    left: 20%;
     transform: rotate(-6deg);
   }
 
@@ -807,7 +823,7 @@
     width: 6rem;
     top: auto;
     bottom: 14%;
-    right: 16%;
+    right: -1%;
     left: auto;
     transform: rotate(10deg);
   }
@@ -835,30 +851,31 @@
 
   .home__artists-wrap {
     width: min(92%, 30rem);
+    transform: translateX(32%);
   }
 
   .home__sticker--cassette {
     width: 6rem;
     top: 6%;
-    left: 2%;
+    left: 14%;
   }
 
   .home__sticker--headphones {
     width: 6rem;
     top: 4%;
-    right: 4%;
+    right: 0%;
   }
 
   .home__sticker--music-a {
     width: 4.75rem;
     bottom: 10%;
-    left: 6%;
+    left: 12%;
   }
 
   .home__sticker--music-2 {
     width: 4.75rem;
     bottom: 8%;
-    right: 6%;
+    right: -2%;
   }
 
   .home__sticker--music-b {

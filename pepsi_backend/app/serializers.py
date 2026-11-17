@@ -5,15 +5,34 @@ from rest_framework import serializers
 NAME_RE = re.compile(r"^[A-Za-z]+(?: [A-Za-z]+)*$")
 EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 PHONE_RE = re.compile(r"^\+92[0-9]{10}$")
-PACK_RE = re.compile(r"^[A-Za-z0-9-]{1,64}$")
-NAME_MAX = 40
+PACK_RE = re.compile(r"^[A-Za-z0-9]{5}$")
+NAME_PART_MAX = 20
+PACK_MAX = 5
+
+
+def _validate_name_part(value, label):
+    value = " ".join(value.split())
+    if not value:
+        raise serializers.ValidationError(f"Please enter your {label}.")
+    if len(value) > NAME_PART_MAX:
+        raise serializers.ValidationError(
+            f"{label.capitalize()} must be {NAME_PART_MAX} characters or fewer."
+        )
+    if any(ch.isdigit() for ch in value):
+        raise serializers.ValidationError(f"{label.capitalize()} cannot contain numbers.")
+    if any(ord(c) < 32 for c in value) or not NAME_RE.fullmatch(value):
+        raise serializers.ValidationError(
+            f"{label.capitalize()} can only use English letters (and spaces between words)."
+        )
+    return value
 
 
 class CreateVideoSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=NAME_MAX, trim_whitespace=True)
+    firstName = serializers.CharField(max_length=NAME_PART_MAX, trim_whitespace=True)
+    lastName = serializers.CharField(max_length=NAME_PART_MAX, trim_whitespace=True)
     email = serializers.EmailField(max_length=254)
     phone = serializers.CharField(max_length=20, trim_whitespace=True)
-    packCode = serializers.CharField(max_length=64, trim_whitespace=True)
+    packCode = serializers.CharField(max_length=PACK_MAX, trim_whitespace=True)
     privacyConsent = serializers.BooleanField()
     marketingOptIn = serializers.BooleanField(required=False, default=False)
     ageConfirmed = serializers.BooleanField()
@@ -25,19 +44,11 @@ class CreateVideoSerializer(serializers.Serializer):
             raise serializers.ValidationError("Unknown field.")
         return super().to_internal_value(data)
 
-    def validate_name(self, value):
-        value = " ".join(value.split())
-        if not value:
-            raise serializers.ValidationError("Please enter your name.")
-        if len(value) > NAME_MAX:
-            raise serializers.ValidationError("Name must be 40 characters or fewer.")
-        if any(ch.isdigit() for ch in value):
-            raise serializers.ValidationError("Name cannot contain numbers.")
-        if any(ord(c) < 32 for c in value) or not NAME_RE.fullmatch(value):
-            raise serializers.ValidationError(
-                "Name can only use English letters (and spaces between words)."
-            )
-        return value
+    def validate_firstName(self, value):
+        return _validate_name_part(value, "first name")
+
+    def validate_lastName(self, value):
+        return _validate_name_part(value, "last name")
 
     def validate_email(self, value):
         value = value.strip().lower()
@@ -56,11 +67,11 @@ class CreateVideoSerializer(serializers.Serializer):
         return value
 
     def validate_packCode(self, value):
-        value = value.strip()
+        value = value.strip().upper()
         if not value:
             raise serializers.ValidationError("Please enter your pack code.")
         if not PACK_RE.fullmatch(value):
-            raise serializers.ValidationError("Enter a valid pack code.")
+            raise serializers.ValidationError("Enter a valid 5-character pack code.")
         return value
 
     def validate_privacyConsent(self, value):
