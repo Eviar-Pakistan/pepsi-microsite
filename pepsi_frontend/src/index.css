@@ -42,11 +42,26 @@
   padding: 0;
 }
 
+html {
+  /* Design reference: 1920×1080. Rem sizes stay stable up to that. */
+  font-size: 16px;
+}
+
 html,
 body,
 #root {
   height: 100%;
   width: 100%;
+}
+
+/*
+  2K / 4K: scale rem so the UI keeps the same relative size as 1920×1080.
+  Uses the tighter axis so nothing overflows tall or ultrawide screens.
+*/
+@media (min-width: 1921px) {
+  html {
+    font-size: calc(16px * min(100vw / 1920, 100vh / 1080));
+  }
 }
 
 body {

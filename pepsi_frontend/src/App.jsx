@@ -33,7 +33,10 @@ export default function App() {
   const bgClass = shellBgClass(screen)
   const useAltBg = Boolean(bgClass)
 
+  const navLocked = screen === 'loading'
+
   const handleNavigate = (next) => {
+    if (navLocked) return
     if (next === 'tcs') {
       setLegalModal('terms')
       return
@@ -109,7 +112,7 @@ export default function App() {
             : undefined
         }
       >
-        <Header activeScreen={screen} onNavigate={handleNavigate} />
+        <Header activeScreen={screen} onNavigate={handleNavigate} navLocked={navLocked} />
         <main className="phone-shell__content">
           {screen === 'home' && <Home onGetVideo={handleGetVideo} />}
           {screen === 'form' && (

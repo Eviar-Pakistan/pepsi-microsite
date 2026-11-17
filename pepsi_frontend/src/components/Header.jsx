@@ -7,14 +7,16 @@ const NAV = [
   { id: 'tcs', label: "T&C's" },
 ]
 
-export default function Header({ activeScreen, onNavigate }) {
+export default function Header({ activeScreen, onNavigate, navLocked = false }) {
   return (
-    <header className="header">
+    <header className={`header${navLocked ? ' header--locked' : ''}`}>
       <button
         type="button"
         className="header__logo-btn"
         onClick={() => onNavigate('home')}
         aria-label="Home"
+        disabled={navLocked}
+        aria-disabled={navLocked}
       >
         <img src={pepsiLogo} alt="Pepsi" className="header__logo" />
       </button>
@@ -34,6 +36,8 @@ export default function Header({ activeScreen, onNavigate }) {
               type="button"
               className={`header__link${isActive ? ' is-active' : ''}`}
               onClick={() => onNavigate(item.id)}
+              disabled={navLocked}
+              aria-disabled={navLocked}
             >
               {item.label}
             </button>
