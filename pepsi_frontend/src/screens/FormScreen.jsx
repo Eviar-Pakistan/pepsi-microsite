@@ -253,7 +253,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
                   maxLength={NAME_PART_MAX}
                   pattern="[A-Za-z]+( [A-Za-z]+)*"
                   title="English letters only, up to 20 characters"
-                  placeholder="John"
+                  placeholder="Ahmad"
                   required
                   disabled={isSubmitting}
                 />
@@ -271,7 +271,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
                   maxLength={NAME_PART_MAX}
                   pattern="[A-Za-z]+( [A-Za-z]+)*"
                   title="English letters only, up to 20 characters"
-                  placeholder="Doe"
+                  placeholder="Raza"
                   required
                   disabled={isSubmitting}
                 />
