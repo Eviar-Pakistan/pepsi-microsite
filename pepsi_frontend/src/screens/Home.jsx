@@ -7,22 +7,14 @@ import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
 import music1Web from '../assets/images/home/web/music-1.png'
 import music2Web from '../assets/images/home/web/music-2.png'
-import mobileCircles from '../assets/images/home/mobile/circles.png'
-import webCircle2 from '../assets/images/home/web/Web circle 2.png'
+import MobileLayerFx from '../components/MobileLayerFx'
 import './Home.css'
 
 export default function Home({ onGetVideo }) {
   return (
     <section className="home">
-      {/* Mobile only — pulse the circles.png asset (Background.png is on the shell) */}
-      <div className="home__mobile-fx" aria-hidden="true">
-        <img src={mobileCircles} alt="" className="home__mobile-fx-circles" />
-      </div>
-
-      {/* Tablet + laptop — pulse Web circle 2 over Background web.png */}
-      <div className="home__web-fx" aria-hidden="true">
-        <img src={webCircle2} alt="" className="home__web-fx-circles" />
-      </div>
+      {/* Mobile + tablet/desktop layered rings (screen 1) */}
+      <MobileLayerFx variant="home" />
 
       <div className="home__top">
         <div className="home__lockup">

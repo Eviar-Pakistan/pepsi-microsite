@@ -4,8 +4,7 @@ import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
 import music1Web from '../assets/images/home/web/music-1.png'
 import music2Web from '../assets/images/home/web/music-2.png'
-import mobileCircles2 from '../assets/images/home/mobile/circles 2 mobile.png'
-import webCircle1 from '../assets/images/home/web/web circle 1.png'
+import MobileLayerFx from '../components/MobileLayerFx'
 import './FormScreen.css'
 
 const PHONE_RE = /^\+92[0-9]{10}$/
@@ -204,14 +203,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
 
   return (
     <section className="form-screen">
-      {/* Mobile only — pulse circles 2 over shell Background.png */}
-      <div className="form-screen__mobile-fx" aria-hidden="true">
-        <img src={mobileCircles2} alt="" className="form-screen__mobile-fx-circles" />
-      </div>
-      {/* Tablet + laptop — pulse web circle 1 over Background web.png */}
-      <div className="form-screen__web-fx" aria-hidden="true">
-        <img src={webCircle1} alt="" className="form-screen__web-fx-circles" />
-      </div>
+      <MobileLayerFx />
       <div className="form-stage">
         {MOBILE_DECOS.map((deco) => (
           <span

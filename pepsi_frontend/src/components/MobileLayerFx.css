@@ -1,0 +1,114 @@
+/*
+  All viewports — breathe pulse (refernce.mp4):
+  fade in + scale up → hold briefly → gradual scale down + fade out
+*/
+@keyframes web-layer-breathe {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  12% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  38% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+  72% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+}
+
+/* —— Mobile (<768) —— */
+.mobile-layer-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mobile-layer-fx__img {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  width: min(165%, 42rem);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transform-origin: center center;
+  object-fit: contain;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: web-layer-breathe 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.18s);
+  will-change: opacity, transform;
+}
+
+/* —— Tablet + desktop (≥768) —— */
+.web-layer-fx {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.web-layer-fx__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100vw, 100vh);
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%) scale(0.92);
+  transform-origin: center center;
+  object-fit: contain;
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: web-layer-breathe 2.4s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.18s);
+  will-change: opacity, transform;
+}
+
+@media (min-width: 768px) {
+  .mobile-layer-fx {
+    display: none;
+  }
+
+  .web-layer-fx {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .web-layer-fx__img {
+    width: max(105vw, 105vh);
+  }
+
+  .web-layer-fx--home .web-layer-fx__img {
+    left: 54%;
+    top: 50%;
+    width: min(195vh, 140vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-layer-fx__img,
+  .web-layer-fx__img {
+    animation: none !important;
+    opacity: 0;
+  }
+
+  .mobile-layer-fx__img:last-child,
+  .web-layer-fx__img:last-child {
+    opacity: 0.85;
+  }
+}

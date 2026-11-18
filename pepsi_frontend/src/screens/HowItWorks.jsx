@@ -1,7 +1,6 @@
 import cassetteWeb from '../assets/images/home/web/cassette.png'
 import headphoneWeb from '../assets/images/home/web/headphone.png'
-import mobileCircles2 from '../assets/images/home/mobile/circles 2 mobile.png'
-import webCircle1 from '../assets/images/home/web/web circle 1.png'
+import MobileLayerFx from '../components/MobileLayerFx'
 import step1 from '../assets/images/how-it-works/step-1.png'
 import step2 from '../assets/images/how-it-works/step-2.png'
 import step3 from '../assets/images/how-it-works/step-3.png'
@@ -34,14 +33,7 @@ const STEPS = [
 export default function HowItWorks() {
   return (
     <section className="hiw">
-      {/* Mobile only — pulse circles 2 over shell Background.png */}
-      <div className="hiw__mobile-fx" aria-hidden="true">
-        <img src={mobileCircles2} alt="" className="hiw__mobile-fx-circles" />
-      </div>
-      {/* Tablet + laptop — pulse web circle 1 over Background web.png (same as form) */}
-      <div className="hiw__web-fx" aria-hidden="true">
-        <img src={webCircle1} alt="" className="hiw__web-fx-circles" />
-      </div>
+      <MobileLayerFx />
       <div className="hiw__heading">
         <img
           src={cassetteWeb}

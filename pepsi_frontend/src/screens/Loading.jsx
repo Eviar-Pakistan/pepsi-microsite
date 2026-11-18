@@ -3,8 +3,7 @@ import vinyl from '../assets/images/home/vinyl.png'
 import pepsiLogo from '../assets/images/home/pepsi-logo.png'
 import cassetteWeb from '../assets/images/home/web/cassette.png'
 import music2Web from '../assets/images/home/web/music-2.png'
-import mobileCircles2 from '../assets/images/home/mobile/circles 2 mobile.png'
-import webCircle1 from '../assets/images/home/web/web circle 1.png'
+import MobileLayerFx from '../components/MobileLayerFx'
 import { getVideoStatus } from '../api/videos'
 import './Loading.css'
 
@@ -94,14 +93,7 @@ export default function Loading({ orderId, onReady, onError }) {
 
   return (
     <section className="loading">
-      {/* Mobile only — pulse circles 2 over shell Background.png */}
-      <div className="loading__mobile-fx" aria-hidden="true">
-        <img src={mobileCircles2} alt="" className="loading__mobile-fx-circles" />
-      </div>
-      {/* Tablet + laptop — pulse web circle 1 over Background web.png (same as form) */}
-      <div className="loading__web-fx" aria-hidden="true">
-        <img src={webCircle1} alt="" className="loading__web-fx-circles" />
-      </div>
+      <MobileLayerFx />
 
       <div className="loading__copy">
         <h1 className="loading__title">LET THEM COOK.</h1>

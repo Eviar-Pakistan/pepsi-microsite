@@ -6,29 +6,6 @@
   position: relative;
 }
 
-/* Mobile only — circles.png pulses over shell Background.png */
-.home__mobile-fx {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.home__mobile-fx-circles {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: min(165%, 42rem);
-  height: auto;
-  max-width: none;
-  transform: translate(-50%, -50%);
-  transform-origin: center center;
-  object-fit: contain;
-  animation: home-circles-pulse 3.4s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
 .home__top {
   position: relative;
   z-index: 6;
@@ -134,16 +111,6 @@
   overflow: hidden;
   isolation: isolate;
   padding: 0 0.35rem;
-}
-
-/* Tablet + laptop only — Web circle 2 (positioned on .home) */
-.home__web-fx {
-  display: none;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
 }
 
 .home__artists-wrap {
@@ -351,18 +318,6 @@
   }
 }
 
-@keyframes home-circles-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.92;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.08);
-    opacity: 1;
-  }
-}
-
 @keyframes cta-gradient-shift {
   0%,
   100% {
@@ -500,30 +455,7 @@
   }
 }
 
-/* Mobile FX off from tablet up; web circles on */
 @media (min-width: 768px) {
-  .home__mobile-fx {
-    display: none;
-  }
-
-  .home__web-fx {
-    display: block;
-  }
-
-  .home__web-fx-circles {
-    position: absolute;
-    left: 50%;
-    top: 52%;
-    width: min(120vh, 92%);
-    height: auto;
-    max-width: none;
-    transform: translate(-50%, -50%);
-    transform-origin: center center;
-    object-fit: contain;
-    animation: home-web-circles-pulse 3.4s ease-in-out infinite;
-    will-change: transform, opacity;
-  }
-
   /* Keep mobile CTA static when hidden; pulse the web CTA instead */
   .home__cta-btn--mobile {
     animation: none;
@@ -550,21 +482,7 @@
   }
 }
 
-@keyframes home-web-circles-pulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.92;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.08);
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .home__mobile-fx-circles,
-  .home__web-fx-circles,
   .home__cta-btn--mobile,
   .home__cta-btn--web,
   .home__sticker,
@@ -775,13 +693,6 @@
     align-items: flex-end;
     justify-content: center;
     padding: 0;
-  }
-
-  /* Full-home positioning — larger rings, slightly right of center-left */
-  .home__web-fx-circles {
-    left: 54%;
-    top: 50%;
-    width: min(195vh, 140vw);
   }
 
   /* Shift YS + stickers right so they sit on the circle center */
