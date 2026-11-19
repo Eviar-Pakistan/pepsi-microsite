@@ -10,15 +10,12 @@ import './FormScreen.css'
 const PHONE_RE = /^\+92[0-9]{10}$/
 /** ASCII / English email only — no non-English scripts */
 const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-/** English letters + single spaces between words; max 20 chars per part */
-const NAME_PART_MAX = 20
-const NAME_RE = /^[A-Za-z]+(?: [A-Za-z]+)*$/
+/** Single English word only; max 10 characters; no spaces */
+const NAME_MAX = 10
+const NAME_RE = /^[A-Za-z]+$/
 
-function sanitizeNamePart(value) {
-  return value
-    .replace(/[^A-Za-z ]/g, '')
-    .replace(/ {2,}/g, ' ')
-    .slice(0, NAME_PART_MAX)
+function sanitizeName(value) {
+  return value.replace(/[^A-Za-z]/g, '').slice(0, NAME_MAX)
 }
 
 function sanitizeEmail(value) {
@@ -33,8 +30,7 @@ function sanitizePackCode(value) {
 }
 
 const INITIAL = {
-  firstName: '',
-  lastName: '',
+  name: '',
   email: '',
   phone: '+92',
   packCode: '',
@@ -72,8 +68,8 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
       return
     }
 
-    if (name === 'firstName' || name === 'lastName') {
-      setValues((prev) => ({ ...prev, [name]: sanitizeNamePart(value) }))
+    if (name === 'name') {
+      setValues((prev) => ({ ...prev, name: sanitizeName(value) }))
       return
     }
 
@@ -100,10 +96,11 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     setValues((prev) => ({ ...prev, [name]: value }))
   }
 
-  const firstNameTrimmed = values.firstName.trim()
-  const lastNameTrimmed = values.lastName.trim()
-  const isNamePartValid = (value) =>
-    value.length > 0 && value.length <= NAME_PART_MAX && NAME_RE.test(value)
+  const nameTrimmed = values.name.trim()
+  const isNameValid =
+    nameTrimmed.length > 0 &&
+    nameTrimmed.length <= NAME_MAX &&
+    NAME_RE.test(nameTrimmed)
 
   const phoneDigits = values.phone.replace(/\D/g, '').slice(2)
   const isPhoneValid = PHONE_RE.test(values.phone.trim())
@@ -130,8 +127,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
   }
 
   const isFormReady =
-    isNamePartValid(firstNameTrimmed) &&
-    isNamePartValid(lastNameTrimmed) &&
+    isNameValid &&
     EMAIL_RE.test(values.email.trim()) &&
     isPhoneValid &&
     isPackValid &&
@@ -142,19 +138,17 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     setOpenTip((prev) => (prev === id ? null : id))
   }
 
-  const validateNamePart = (value, label) => {
+  const validateName = (value) => {
     if (!value) {
-      setError(`Please enter your ${label}.`)
+      setError('Please enter your name.')
       return false
     }
-    if (value.length > NAME_PART_MAX) {
-      setError(`${label} must be ${NAME_PART_MAX} characters or fewer.`)
+    if (value.length > NAME_MAX) {
+      setError(`Name must be ${NAME_MAX} characters or fewer.`)
       return false
     }
     if (!NAME_RE.test(value)) {
-      setError(
-        `${label} can only use English letters (and spaces between words).`,
-      )
+      setError('Name must be a single word using English letters only (no spaces).')
       return false
     }
     return true
@@ -164,8 +158,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     e.preventDefault()
     if (isSubmitting || !isFormReady) return
 
-    if (!validateNamePart(firstNameTrimmed, 'Name')) return
-    if (!validateNamePart(lastNameTrimmed, 'Last name')) return
+    if (!validateName(nameTrimmed)) return
     if (!EMAIL_RE.test(values.email.trim())) {
       setError('Enter a valid English email address (letters, numbers, and @ . _ % + - only).')
       return
@@ -192,8 +185,7 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
     try {
       await onSubmit({
         ...values,
-        firstName: firstNameTrimmed,
-        lastName: lastNameTrimmed,
+        name: nameTrimmed,
       })
     } catch (err) {
       setError(err.message || 'Something went wrong. Please try again.')
@@ -232,43 +224,23 @@ export default function FormScreen({ onSubmit, onOpenTerms, onOpenPrivacy }) {
           </p>
 
           <div className="form-fields">
-            <div className="form-fields__names">
-              <label className="form-field">
-                <span className="form-field__label">NAME:</span>
-                <input
-                  className="form-field__input"
-                  type="text"
-                  name="firstName"
-                  value={values.firstName}
-                  onChange={handleChange}
-                  autoComplete="given-name"
-                  maxLength={NAME_PART_MAX}
-                  pattern="[A-Za-z]+( [A-Za-z]+)*"
-                  title="English letters only, up to 20 characters"
-                  placeholder="Ahmad"
-                  required
-                  disabled={isSubmitting}
-                />
-              </label>
-
-              <label className="form-field">
-                <span className="form-field__label">LAST NAME:</span>
-                <input
-                  className="form-field__input"
-                  type="text"
-                  name="lastName"
-                  value={values.lastName}
-                  onChange={handleChange}
-                  autoComplete="family-name"
-                  maxLength={NAME_PART_MAX}
-                  pattern="[A-Za-z]+( [A-Za-z]+)*"
-                  title="English letters only, up to 20 characters"
-                  placeholder="Raza"
-                  required
-                  disabled={isSubmitting}
-                />
-              </label>
-            </div>
+            <label className="form-field">
+              <span className="form-field__label">NAME:</span>
+              <input
+                className="form-field__input"
+                type="text"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                autoComplete="given-name"
+                maxLength={NAME_MAX}
+                pattern="[A-Za-z]+"
+                title="One English word only, up to 10 characters, no spaces"
+                placeholder="Ahmad"
+                required
+                disabled={isSubmitting}
+              />
+            </label>
 
             <label className="form-field">
               <span className="form-field__label">EMAIL ADDRESS:</span>

@@ -11,7 +11,7 @@ Mobile-first React frontend for the Pepsi × Young Stunners personalized video c
 ## Screens
 
 1. **Home** — hero + CTA
-2. **Form** — name / email / city
+2. **Form** — name / email / phone / pack code
 3. **Loading** — “Let them cook” vinyl progress (clears on refresh → Home)
 4. **How It Works** — 4-step cards
 

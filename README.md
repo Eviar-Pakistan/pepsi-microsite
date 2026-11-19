@@ -45,12 +45,22 @@ UI: `http://localhost:5173` (proxies `/api` → Django on port `8000`)
 ### Create body
 
 ```json
-{ "name": "Ali", "email": "ali@example.com", "city": "Karachi" }
+{
+  "name": "Ali",
+  "email": "ali@example.com",
+  "phone": "+923001234567",
+  "packCode": "ABC12",
+  "privacyConsent": true,
+  "marketingOptIn": false,
+  "ageConfirmed": true
+}
 ```
+
+`name` is a single word, English letters only, max 10 characters (no spaces).
 
 ## Database
 
 MySQL (see `pepsi_backend/.env`):
 
-- `app_user` — name, email, city
+- `app_user` — name, email, phone, pack_code, consents
 - `app_videojob` — `order_id`, status, `video_url`, rejection info

@@ -5,8 +5,7 @@
 
 export async function createVideo(formValues) {
   const body = {
-    firstName: String(formValues.firstName || '').trim(),
-    lastName: String(formValues.lastName || '').trim(),
+    name: String(formValues.name || '').trim(),
     email: String(formValues.email || '').trim(),
     phone: String(formValues.phone || '').trim().replace(/\s/g, ''),
     packCode: String(formValues.packCode || '').trim(),

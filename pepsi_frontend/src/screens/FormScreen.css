@@ -62,13 +62,6 @@
   gap: 0.75rem;
 }
 
-/* Short first/last name side by side on all sizes */
-.form-fields__names {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-}
-
 .form-field {
   display: flex;
   flex-direction: column;
@@ -401,23 +394,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem 1.15rem;
-  }
-
-  /* First + last share ONE grid cell (keeps form at 2 rows) */
-  .form-fields__names {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.65rem;
-    min-width: 0;
-  }
-
-  .form-fields__names .form-field__label {
-    font-size: 0.65rem;
-  }
-
-  .form-fields__names .form-field__input {
-    padding: 0 0.85rem;
-    font-size: 0.85rem;
   }
 
   .form-field__label {

@@ -2,34 +2,31 @@ import re
 
 from rest_framework import serializers
 
-NAME_RE = re.compile(r"^[A-Za-z]+(?: [A-Za-z]+)*$")
+NAME_RE = re.compile(r"^[A-Za-z]+$")
 EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 PHONE_RE = re.compile(r"^\+92[0-9]{10}$")
 PACK_RE = re.compile(r"^[A-Za-z0-9]{5}$")
-NAME_PART_MAX = 20
+NAME_MAX = 10
 PACK_MAX = 5
 
 
-def _validate_name_part(value, label):
-    value = " ".join(value.split())
+def _validate_name(value):
+    value = value.strip()
     if not value:
-        raise serializers.ValidationError(f"Please enter your {label}.")
-    if len(value) > NAME_PART_MAX:
-        raise serializers.ValidationError(
-            f"{label.capitalize()} must be {NAME_PART_MAX} characters or fewer."
-        )
+        raise serializers.ValidationError("Please enter your name.")
+    if " " in value or len(value.split()) > 1:
+        raise serializers.ValidationError("Name must be a single word with no spaces.")
+    if len(value) > NAME_MAX:
+        raise serializers.ValidationError(f"Name must be {NAME_MAX} characters or fewer.")
     if any(ch.isdigit() for ch in value):
-        raise serializers.ValidationError(f"{label.capitalize()} cannot contain numbers.")
+        raise serializers.ValidationError("Name cannot contain numbers.")
     if any(ord(c) < 32 for c in value) or not NAME_RE.fullmatch(value):
-        raise serializers.ValidationError(
-            f"{label.capitalize()} can only use English letters (and spaces between words)."
-        )
+        raise serializers.ValidationError("Name can only use English letters (no spaces).")
     return value
 
 
 class CreateVideoSerializer(serializers.Serializer):
-    firstName = serializers.CharField(max_length=NAME_PART_MAX, trim_whitespace=True)
-    lastName = serializers.CharField(max_length=NAME_PART_MAX, trim_whitespace=True)
+    name = serializers.CharField(max_length=NAME_MAX, trim_whitespace=True)
     email = serializers.EmailField(max_length=254)
     phone = serializers.CharField(max_length=20, trim_whitespace=True)
     packCode = serializers.CharField(max_length=PACK_MAX, trim_whitespace=True)
@@ -44,11 +41,8 @@ class CreateVideoSerializer(serializers.Serializer):
             raise serializers.ValidationError({"non_field_errors": ["Unknown field."]})
         return super().to_internal_value(data)
 
-    def validate_firstName(self, value):
-        return _validate_name_part(value, "first name")
-
-    def validate_lastName(self, value):
-        return _validate_name_part(value, "last name")
+    def validate_name(self, value):
+        return _validate_name(value)
 
     def validate_email(self, value):
         value = value.strip().lower()
