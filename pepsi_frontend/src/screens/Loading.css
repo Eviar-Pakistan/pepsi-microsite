@@ -58,7 +58,7 @@
 /* Taller phones only — leave SE alone, push group down more */
 @media (max-width: 767px) and (min-height: 700px) {
   .loading__vinyl-wrap {
-    margin-top: 7.75rem;
+    margin-top: 6.75rem;
   }
 }
 
