@@ -17,12 +17,31 @@ const PROGRESS_CAP = 92
 /** Time to reach PROGRESS_CAP evenly (ms) — leaves a gap until the job finishes */
 const RAMP_MS = 90_000
 
-export default function Loading({ orderId, onReady, onError }) {
-  const [progress, setProgress] = useState(0)
-  const startedAt = useRef(Date.now())
+function resolveStartedAt(startedAt) {
+  const n = Number(startedAt)
+  return Number.isFinite(n) && n > 0 ? n : Date.now()
+}
+
+function progressFromElapsed(elapsedMs) {
+  return Math.min(PROGRESS_CAP, (elapsedMs / RAMP_MS) * PROGRESS_CAP)
+}
+
+export default function Loading({ orderId, startedAt: startedAtProp, onReady, onError }) {
+  const startedAtMs = resolveStartedAt(startedAtProp)
+  const [progress, setProgress] = useState(() =>
+    progressFromElapsed(Date.now() - startedAtMs),
+  )
+  const startedAt = useRef(startedAtMs)
   const onReadyRef = useRef(onReady)
   const onErrorRef = useRef(onError)
   const doneRef = useRef(false)
+
+  useEffect(() => {
+    startedAt.current = resolveStartedAt(startedAtProp)
+    if (!doneRef.current) {
+      setProgress(progressFromElapsed(Date.now() - startedAt.current))
+    }
+  }, [startedAtProp])
 
   useEffect(() => {
     onReadyRef.current = onReady
@@ -33,8 +52,7 @@ export default function Loading({ orderId, onReady, onError }) {
     const id = setInterval(() => {
       if (doneRef.current) return
       const elapsed = Date.now() - startedAt.current
-      const next = Math.min(PROGRESS_CAP, (elapsed / RAMP_MS) * PROGRESS_CAP)
-      setProgress(next)
+      setProgress(progressFromElapsed(elapsed))
     }, 200)
 
     return () => clearInterval(id)
