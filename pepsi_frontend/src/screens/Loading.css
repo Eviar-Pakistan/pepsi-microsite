@@ -48,6 +48,20 @@
   margin-top: 1rem;
 }
 
+/* Mobile — SE / short phones (~667px tall) keep this */
+@media (max-width: 767px) {
+  .loading__vinyl-wrap {
+    margin-top: 2.5rem;
+  }
+}
+
+/* Taller phones only — leave SE alone, push group down more */
+@media (max-width: 767px) and (min-height: 700px) {
+  .loading__vinyl-wrap {
+    margin-top: 7.75rem;
+  }
+}
+
 .loading__ring {
   position: relative;
   width: 13.75rem;
